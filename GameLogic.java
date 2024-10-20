@@ -36,18 +36,24 @@ public class GameLogic {
             
             switch (action) {
                 case 1:
-                    activePlayer.skillOne();
+                    int damage = activePlayer.skillOne();
+                    monster.setHP(monster.getHP()-damage);
                     break;
                 case 2:
-                    activePlayer.skillTwo();
+                    damage = activePlayer.skillTwo();
+                    monster.setHP(monster.getHP()-damage);
                     break;
                 case 3:
-                    activePlayer.skillThree();
+                    damage = activePlayer.skillThree();
+                    monster.setHP(monster.getHP()-damage);
                     break;
                 default:
                     System.out.println("Invalid choice!");
                     continue;
-            }            
+            }      
+            
+            System.out.println("\n" + monster.displayName() + " HP: " + monster.getHP());          
+            
             
 
             // Check if the slime is dead
@@ -57,10 +63,11 @@ public class GameLogic {
             }
 
             // Enemy attacks a random player
-            System.out.println("\n" + slime.getName() + "'s turn.");
+            System.out.println("\n" + monster.displayName() + "'s turn.");
             Character target = party[(int) (Math.random() * party.length)];
             if (target.isAlive()) {
-                slime.attack(target);
+                int damage = monster.skillOne();
+                target.setHP(target.getHP()-damage);
             }
 
             // Check if all players are dead
