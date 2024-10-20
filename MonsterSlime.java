@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package java.game;
+package game;
 import java.util.Random;
 /**
  *
@@ -11,6 +11,9 @@ import java.util.Random;
 public class MonsterSlime extends Monster{
     private int HP;
     
+    public MonsterSlime (int HP){
+        this.HP = HP;       
+    }
     @Override
     public String displayName(){
         return "Slime";
