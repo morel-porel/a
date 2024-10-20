@@ -14,7 +14,15 @@ public class JavaGame {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        // Define characters
+        CharacterJascha Jascha = new CharacterJascha(150, 50);
+        CharacterElara Elara = new CharacterElara(150, 50);
+        CharacterFinn Finn = new CharacterFinn(150, 50);
+        Character[] party = { Jascha, Elara, Finn };
+        GameLogic g = new GameLogic();
+        MonsterSlime slime = new MonsterSlime(200);
+        g.battle(slime, party);
+
     }
     
 }
