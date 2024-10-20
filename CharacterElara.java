@@ -95,6 +95,7 @@ public class CharacterElara extends Character{
             return -1;
         }
     }
+    //need fix implement pls
     @Override
     public int skillThree(){
         Random ran = new Random();
