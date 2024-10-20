@@ -50,6 +50,8 @@ public class CharacterFinn extends Character{
     public int getMaxMP() {
         return maxMP;
     }
+
+    //fix implement pls
     @Override
     public int skillOne(){
         Random ran = new Random();
