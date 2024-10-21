@@ -101,5 +101,20 @@ public class CharacterFinn extends Character{
             return -1;
         }
     }
+    
+    @Override
+    public String getSkillOne() {
+        return "Traps (Can stun for one turn)";
+    }
+
+    @Override
+    public String getSkillTwo() {
+        return "Bombs";
+    }
+
+    @Override
+    public String getSkillThree() {
+        return "'I am Atomic'";
+    }
  
 }
