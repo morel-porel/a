@@ -88,5 +88,19 @@ public class CharacterJascha extends Character{
             return -1;
         }
     }
+    @Override
+    public String getSkillOne() {
+        return "Flashstrike Thunderclap";
+    }
+
+    @Override
+    public String getSkillTwo() {
+        return "Moonlight Swords";
+    }
+
+    @Override
+    public String getSkillThree() {
+        return "Ancient Kick";
+    }
  
 }
