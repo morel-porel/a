@@ -115,6 +115,21 @@ public class CharacterFinn extends Character{
     @Override
     public String getSkillThree() {
         return "'I am Atomic'";
+    }    
+    
+    @Override
+    public int skillOneMP() {
+        return 30;
+    }
+
+    @Override
+    public int skillTwoMP() {
+        return 20;
+    }
+
+    @Override
+    public int skillThreeMP() {
+        return 5;
     }
  
 }
