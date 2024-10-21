@@ -61,18 +61,16 @@ public class GameLogic {
             int action = readInt("\nChoose a skill:", 3); //
             
             
+            int damage;
             switch (action) {
-                case 1://changes
-                    int damage = activePlayer.skillOne();
-                    if (activePlayer.displayName().equalsIgnoreCase("Finn")) {
-                        monster.setHP(monster.getHP() - Math.abs(damage));  
-                        if (damage == -2) { 
-                            enemyStunned = true;
-                            System.out.println("The enemy is stunned and will skip their next turn.");
-                        }
-                    } else {
-                        monster.setHP(monster.getHP() - damage);  
+                case 1:
+                    damage = activePlayer.skillOne();
+                    if (damage < 0) { // If damage is negative, it includes stun
+                        enemyStunned = true;
+                        damage = Math.abs(damage + 2); // Extract actual damage
+                        System.out.println("The enemy is stunned and will skip their next turn.");
                     }
+                    monster.setHP(monster.getHP() - damage);
                     break;
                 case 2:
                     damage = activePlayer.skillTwo();
