@@ -123,5 +123,19 @@ public class CharacterElara extends Character{
     public String getSkillThree() {
         return "Buff";
     }
+    @Override
+    public int skillOneMP() {
+        return 0;
+    }
+
+    @Override
+    public int skillTwoMP() {
+        return 20;
+    }
+
+    @Override
+    public int skillThreeMP() {
+        return 50;
+    }
  
 }
