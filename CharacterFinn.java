@@ -80,20 +80,25 @@ public class CharacterFinn extends Character{
             return skillTwoDamage;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     @Override
     public int skillThree(){
         Random ran = new Random();
         if(MP>=5){
+            if(HP<=50){
+                System.out.println("Not enough HP! 50 HP Needed.");
+                return 0;
+            }
             int skillThreeDamage = ran.nextInt(100-75+1) + 75;
             MP-=5;
+            HP-=50;
             System.out.println("Finn used 'I am Atomic'! Dealt "+skillThreeDamage +" damage!");
             return skillThreeDamage;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     
