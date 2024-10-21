@@ -51,20 +51,29 @@ public class CharacterFinn extends Character{
         return maxMP;
     }
 
-    //fix implement pls
+    //CHANGES
     @Override
     public int skillOne(){
-        Random ran = new Random();
-        if(MP>=30){
-            int skillOneDamage = ran.nextInt(15-5+1) + 5;
-            MP-=30;
-            System.out.println("Finn used Traps! Dealt "+skillOneDamage +" damage!");
-            return skillOneDamage;
+    Random ran = new Random();
+    if(MP >= 30){
+        int skillOneDamage = ran.nextInt(15 - 5 + 1) + 5;
+        MP -= 30;
+
+        boolean isStunned = ran.nextInt(100) < 50; 
+
+        if(isStunned) {
+            System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
+            return -2;
         } else {
-            System.out.println("Not enough MP.");
-            return -1;
+            System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
         }
+
+        return skillOneDamage;
+    } else {
+        System.out.println("Not enough MP.");
+        return -1;
     }
+}
     //basta
     @Override
     public int skillTwo(){
