@@ -71,20 +71,50 @@ public class GameLogic {
                         damage = Math.abs(damage + 2); // Extract actual damage
                         System.out.println("The enemy is stunned and will skip their next turn.");
                     }
+                    //temp fix this pa 74-112
+                    System.out.println("Original Damage: "+damage); 
+                    damage = activePlayer.applyBuff(damage);
+                    System.out.println("Damage after applying buff: "+ damage);
                     monster.setHP(monster.getHP() - damage);
                     break;
                 case 2:
                     damage = activePlayer.skillTwo();
+                    System.out.println("Original Damage: "+damage);
+                    damage = activePlayer.applyBuff(damage);
+                    System.out.println("Damage after applying buff: "+ damage);
                     monster.setHP(monster.getHP()-damage);
                     break;
                 case 3:
-                    damage = activePlayer.skillThree();
-                    monster.setHP(monster.getHP()-damage);
+                    //damage = activePlayer.skillThree();
+                    //monster.setHP(monster.getHP()-damage);
+                    
+                    
+                    
+                    
+                    if(activePlayer instanceof CharacterElara){
+                //ga check ni if ang chosen hero kay si Elara
+                        int buffPercent = activePlayer.skillThree();
+                        for (Character party1 : party) { //loop through party array then set buffpercentage
+                            party1.setBuffPercentage(buffPercent);
+                            party1.setBuffActive(true);
+                            party1.setBuffTurnsRemaining(2);
+                        }
+                        
+                        
+                        
+                    } else {
+                        damage = activePlayer.skillThree();
+                        System.out.println("Original Damage: "+damage);
+                        damage = activePlayer.applyBuff(damage);
+                        System.out.println("Damage after applying buff: "+ damage);
+                        monster.setHP(monster.getHP() - (damage));
+                    }
+                    
                     break;
                 default:
                     System.out.println("Invalid choice!");
                     continue;
-            }      
+            }       
             
             System.out.println("\n" + monster.displayName() + " HP: " + monster.getHP());          
             
