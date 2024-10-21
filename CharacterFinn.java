@@ -65,6 +65,7 @@ public class CharacterFinn extends Character{
             return -1;
         }
     }
+    //basta
     @Override
     public int skillTwo(){
         Random ran = new Random();
