@@ -52,28 +52,23 @@ public class CharacterFinn extends Character{
     }
 
     //CHANGES
-    @Override
-    public int skillOne(){
-    Random ran = new Random();
-    if(MP >= 30){
-        int skillOneDamage = ran.nextInt(15 - 5 + 1) + 5;
-        MP -= 30;
-
-        boolean isStunned = ran.nextInt(100) < 50; 
-
-        if(isStunned) {
-            System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
-            return -2;
-        } else {
+   @Override
+    public int skillOne() {
+        Random ran = new Random();
+        if (MP >= 30) {
+            int skillOneDamage = ran.nextInt(11) + 5; // 5 to 15 damage range
+            MP -= 30;
+            if (ran.nextInt(100) < 50) { // % chance to stun
+                System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
+                return -(skillOneDamage + 2); // Use negative damage to indicate stun
+            }
             System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
+            return skillOneDamage; // Normal damage
+        } else {
+            System.out.println("Not enough MP.");
+            return 0; // No damage, not enough MP
         }
-
-        return skillOneDamage;
-    } else {
-        System.out.println("Not enough MP.");
-        return -1;
     }
-}
     //basta
     @Override
     public int skillTwo(){
