@@ -88,7 +88,7 @@ public class GameLogic {
                 break;
             }
 
-            // If the enemy is stunned, skip their turn
+            // If the enemy is stunned, skip their turn (MAJOR CHANGES)
             if (enemyStunned) {
                 System.out.println(monster.displayName() + " is stunned and skips their turn.");
                 enemyStunned = false; // Reset stun status after skipping turn
