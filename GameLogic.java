@@ -14,6 +14,7 @@ public class GameLogic {
         Scanner scan = new Scanner(System.in);
         monster.show();
         monster.displayName();
+        boolean enemyStunned = false;
         
         while (anyPlayerAlive(party) && monster.isAlive()) {
             // Player selects a character
@@ -35,9 +36,17 @@ public class GameLogic {
             
             
             switch (action) {
-                case 1:
+                case 1://changes
                     int damage = activePlayer.skillOne();
-                    monster.setHP(monster.getHP()-damage);
+                    if (activePlayer.displayName().equalsIgnoreCase("Finn")) {
+                        monster.setHP(monster.getHP() - Math.abs(damage));  
+                        if (damage == -2) { 
+                            enemyStunned = true;
+                            System.out.println("The enemy is stunned and will skip their next turn.");
+                        }
+                    } else {
+                        monster.setHP(monster.getHP() - damage);  
+                    }
                     break;
                 case 2:
                     damage = activePlayer.skillTwo();
@@ -62,12 +71,18 @@ public class GameLogic {
                 break;
             }
 
-            // Enemy attacks a random player
-            System.out.println("\n" + monster.displayName() + "'s turn.");
-            Character target = party[(int) (Math.random() * party.length)];
-            if (target.isAlive()) {
-                int damage = monster.skillOne();
-                target.setHP(target.getHP()-damage);
+            // If the enemy is stunned, skip their turn
+            if (enemyStunned) {
+                System.out.println(monster.displayName() + " is stunned and skips their turn.");
+                enemyStunned = false; // Reset stun status after skipping turn
+            } else {
+                // Enemy attacks a random player
+                System.out.println("\n" + monster.displayName() + "'s turn.");
+                Character target = party[(int) (Math.random() * party.length)];
+                if (target.isAlive()) {
+                    int damage = monster.skillOne();
+                    target.setHP(target.getHP() - damage);
+                }
             }
 
             // Check if all players are dead
