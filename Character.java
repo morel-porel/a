@@ -30,4 +30,8 @@ public abstract class Character {
     public void show(){
         System.out.println("You chose: ");
     }
+    
+    public abstract String getSkillOne(); 
+    public abstract String getSkillTwo(); 
+    public abstract String getSkillThree(); 
 }
