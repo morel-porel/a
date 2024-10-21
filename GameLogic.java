@@ -8,23 +8,40 @@ import java.util.*;
  *
  * @author User
  */
-public class GameLogic {
-    @SuppressWarnings("ConvertToTryWithResources")
+public class GameLogic {    
+    static Scanner scan = new Scanner(System.in);
+    
+    public static int readInt(String prompt, int userChoices){
+        int input;
+        do{
+            System.out.println(prompt);
+            try{
+                input = scan.nextInt();
+            }catch(Exception e){
+                scan.nextLine();
+                input = -1;
+                System.out.println("Please enter an integer!");
+            }
+        }while(input < 1 || input > userChoices);
+        return input;
+    }
+    
     public void battle(Monster monster, Character[] party){
-        Scanner scan = new Scanner(System.in);
+        
         monster.show();
-        monster.displayName();
+        System.out.println(monster.displayName()+" is ready to strike!");
         boolean enemyStunned = false;
         
         while (anyPlayerAlive(party) && monster.isAlive()) {
             // Player selects a character
-            System.out.println("\nChoose a character:");
+            
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
                     System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + ")");
                 }
             }
-            int choice = scan.nextInt() - 1;
+            
+           int choice = readInt("\nChoose a character:", 3)-1;
             Character activePlayer = party[choice];
 
             // Player chooses an action
@@ -32,7 +49,7 @@ public class GameLogic {
             System.out.println("1. Use Skill One");
             System.out.println("2. Use Skill Two");
             System.out.println("3. Use Skill Three");
-            int action = scan.nextInt();
+            int action = readInt("\nChoose a skill:", 3); //
             
             
             switch (action) {
