@@ -29,7 +29,7 @@ public class GameLogic {
     public void battle(Monster monster, Character[] party){
         
         monster.show();
-        System.out.println(monster.displayName()+" is ready to strike!");
+        System.out.println(monster.displayName()+" is ready to strike!\n"); 
         boolean enemyStunned = false;
         
         while (anyPlayerAlive(party) && monster.isAlive()) {
@@ -58,7 +58,8 @@ public class GameLogic {
             System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+")");//
             System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+")");//
             System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+")");//
-            int action = readInt("\nChoose a skill:", 3); //
+            int action = readInt("\nChoose a skill:", 3); 
+            System.out.println();
             
             
             int damage;
@@ -102,11 +103,16 @@ public class GameLogic {
             } else {
                 // Enemy attacks a random player
                 System.out.println("\n" + monster.displayName() + "'s turn.");
-                Character target = party[(int) (Math.random() * party.length)];
-                if (target.isAlive()) {
-                    int damage = monster.skillOne();
-                    target.setHP(target.getHP() - damage);
-                }
+                Character target;
+                do {
+                    target = party[(int) (Math.random() * party.length)];  // Select a random party member
+                } while (!target.isAlive());  // Repeat if the selected character is not alive
+                System.out.println("\n" + target.displayName() + " targeted.");
+                damage = monster.skillOne();
+                System.out.println();
+                target.setHP(target.getHP() - damage);
+                
+                
             }
 
             // Check if all players are dead
