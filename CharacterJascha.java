@@ -59,7 +59,7 @@ public class CharacterJascha extends Character{
             return skillOneDamage;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     @Override
@@ -72,7 +72,7 @@ public class CharacterJascha extends Character{
             return skillTwoDamage;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     @Override
@@ -85,7 +85,7 @@ public class CharacterJascha extends Character{
             return skillThreeDamage;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     @Override
