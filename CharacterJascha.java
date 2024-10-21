@@ -102,5 +102,20 @@ public class CharacterJascha extends Character{
     public String getSkillThree() {
         return "Ancient Kick";
     }
+    
+    @Override
+    public int skillOneMP() {
+        return 10;
+    }
+
+    @Override
+    public int skillTwoMP() {
+        return 15;
+    }
+
+    @Override
+    public int skillThreeMP() {
+        return 35;
+    }
  
 }
