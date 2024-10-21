@@ -15,6 +15,12 @@ public class CharacterFinn extends Character{
     private int maxHP;
     private int MP;
     private int maxMP;
+
+        //buff related variables
+    private boolean buffActive = false;
+    private int buffTurnsRemaining = 2;
+    private int buffPercentage = 0;
+    
     public CharacterFinn (int HP, int MP){
         this.HP = HP;
         this.maxHP = HP;
@@ -102,6 +108,33 @@ public class CharacterFinn extends Character{
         }
     }
     
+    @Override
+    public int applyBuff(int baseDamage){
+        if(buffActive){
+            int modifiedDamage = baseDamage + (baseDamage * buffPercentage / 100);
+            buffTurnsRemaining--;
+            if (buffTurnsRemaining <= 0){
+                buffActive = false; // Reset buff after its duration
+                buffPercentage = 0;
+                System.out.println("Buff has expired."); // return base damage/ original damage
+            }
+            return modifiedDamage;//increase damage by 20%
+        }
+        return baseDamage;// No buff applied
+    }
+    
+    @Override
+    public void setBuffPercentage(int buffPercentage){
+        this.buffPercentage = buffPercentage;
+    }
+    @Override    
+    public void setBuffActive(boolean buffActive){
+        this.buffActive = buffActive;
+    }
+    @Override    
+    public void setBuffTurnsRemaining(int buffTurnsRemaining){
+        this.buffTurnsRemaining = buffTurnsRemaining;
+    }
     @Override
     public String getSkillOne() {
         return "Traps (Can stun for one turn)";
