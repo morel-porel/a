@@ -41,8 +41,17 @@ public class GameLogic {
                 }
             }
             
-           int choice = readInt("\nChoose a character:", 3)-1;
-            Character activePlayer = party[choice];
+            int choice;
+            Character activePlayer;
+            do{
+                choice = readInt("\nChoose a character: ", 3)-1;
+                activePlayer = party[choice];
+                if(!activePlayer.isAlive()){
+                    scan.nextLine();
+                    choice = -1;
+                    System.out.println(activePlayer.displayName()+" is down!");
+                }                
+            } while(choice == -1);
 
             // Player chooses an action
             System.out.println("\n" + activePlayer.displayName() + "'s turn.");
