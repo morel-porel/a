@@ -12,6 +12,7 @@ public abstract class Character {
     //dbjahsbdjbjahsdbjh
     // hello Im here!
     // hello !!!!!!!!!!!!
+    // i was here
     public abstract String displayName();
     public abstract void setHP(int HP);
     public abstract int getHP();
