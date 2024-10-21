@@ -37,7 +37,7 @@ public class GameLogic {
             
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
-                    System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + ")");
+                    System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + "/"+party[i].getMaxHP()+" | MP: "+party[i].getMP()+"/"+party[i].getMaxMP()+")");
                 }
             }
             
@@ -46,9 +46,9 @@ public class GameLogic {
 
             // Player chooses an action
             System.out.println("\n" + activePlayer.displayName() + "'s turn.");
-            System.out.println("1. Use Skill One");
-            System.out.println("2. Use Skill Two");
-            System.out.println("3. Use Skill Three");
+            System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+")");//
+            System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+")");//
+            System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+")");//
             int action = readInt("\nChoose a skill:", 3); //
             
             
