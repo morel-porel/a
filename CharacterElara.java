@@ -109,5 +109,19 @@ public class CharacterElara extends Character{
             return -1;
         }
     }
+    @Override
+    public String getSkillOne() {
+        return "Staff Attack";
+    }
+
+    @Override
+    public String getSkillTwo() {
+        return "Heal";
+    }
+
+    @Override
+    public String getSkillThree() {
+        return "Buff";
+    }
  
 }
