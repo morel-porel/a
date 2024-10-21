@@ -10,7 +10,7 @@ import java.util.*;
  */
 public class GameLogic {
     @SuppressWarnings("ConvertToTryWithResources")
-    public static void battle(Monster monster, Character[] party){
+    public void battle(Monster monster, Character[] party){
         Scanner scan = new Scanner(System.in);
         monster.show();
         monster.displayName();
