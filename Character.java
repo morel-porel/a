@@ -22,7 +22,13 @@ public abstract class Character {
     public abstract int getMaxMP();
     public abstract int skillOne();
     public abstract int skillTwo();
-    public abstract int skillThree();
+    public abstract int skillThree();    
+    public abstract String getSkillOne(); 
+    public abstract String getSkillTwo(); 
+    public abstract String getSkillThree(); 
+    public abstract int skillOneMP(); 
+    public abstract int skillTwoMP(); 
+    public abstract int skillThreeMP();
     
     public boolean isAlive() {
         return getHP() > 0;
@@ -31,7 +37,4 @@ public abstract class Character {
         System.out.println("You chose: ");
     }
     
-    public abstract String getSkillOne(); 
-    public abstract String getSkillTwo(); 
-    public abstract String getSkillThree(); 
 }
