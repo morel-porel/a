@@ -68,7 +68,7 @@ public class CharacterElara extends Character{
             return healAmount;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     
@@ -92,7 +92,7 @@ public class CharacterElara extends Character{
             return healAmount;
         } else {
             System.out.println("Not enough MP.");
-            return -1;
+            return 0;
         }
     }
     //need fix implement pls
