@@ -17,8 +17,9 @@ public class CharacterElara extends Character{
 
     //buff related variables
     private boolean buffActive = false;
-    private int buffTurnsRemaining = 2;
     private int buffPercentage = 0;
+    private int buffDamage = 0;
+    private int buffTurnsRemaining;
     
     public CharacterElara (int HP, int MP){
         this.HP = HP;
@@ -58,8 +59,12 @@ public class CharacterElara extends Character{
     @Override
     public int skillOne(){
         Random ran = new Random();
-        int skillOneDamage = ran.nextInt(11);
-        System.out.println("Elara used Staff Attack! Dealt "+skillOneDamage +" damage!");
+        int skillOneDamage = applyBuff(ran.nextInt(11));
+        if(isBuffActive()){
+            System.out.println("Elara used Staff Attack! Dealt "+(skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
+        } else {
+            System.out.println("Elara used Staff Attack! Dealt "+skillOneDamage +" damage!");            
+        }
         return skillOneDamage;
     }
     @Override    
@@ -123,7 +128,7 @@ public class CharacterElara extends Character{
         if(MP>=50){
             int buffPercentage = ran.nextInt(21);
             MP-=50;
-            System.out.println("Elara used Buff! Attacks now deal "+buffPercentage +"% more damage!");
+            System.out.println("Elara used Buff! Party attacks now deal "+buffPercentage +"% more damage in the next turn!");
             return buffPercentage;
         } else {
             System.out.println("Not enough MP.");
@@ -134,13 +139,8 @@ public class CharacterElara extends Character{
     @Override
     public int applyBuff(int baseDamage){
         if(buffActive){
-            int modifiedDamage = baseDamage + (baseDamage * buffPercentage / 100);
-            buffTurnsRemaining--;
-            if (buffTurnsRemaining <= 0){
-                buffActive = false; // Reset buff after its duration
-                buffPercentage = 0;
-                System.out.println("Buff has expired."); // return base damage/ original damage
-            }
+            buffDamage = baseDamage * buffPercentage / 100;
+            int modifiedDamage = baseDamage + buffDamage;
             return modifiedDamage;//increase damage by 20%
         }
         return baseDamage;// No buff applied
@@ -156,6 +156,14 @@ public class CharacterElara extends Character{
     @Override    
     public void setBuffTurnsRemaining(int buffTurnsRemaining){
         this.buffTurnsRemaining = buffTurnsRemaining;
+    }
+    @Override    
+    public boolean isBuffActive(){
+        return buffActive;
+    }
+    @Override    
+    public int getBuffTurnsRemaining(){
+        return buffTurnsRemaining;
     }
     @Override
     public String getSkillOne() {
