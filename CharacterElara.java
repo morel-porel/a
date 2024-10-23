@@ -81,19 +81,34 @@ public class CharacterElara extends Character{
     public int skillTwo(Character[] party){
         Scanner scan = new Scanner(System.in);
         Random ran = new Random();
+        GameLogic objGame = new GameLogic();
         if(MP>=20){
             MP-=20;
-            System.out.println("Elara used Heal! Choose a party member to heal:");
+            System.out.println("\nElara used Heal!");
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
                     System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + ")");
                 }
             }
-            int targetIndex = scan.nextInt() - 1;
-            Character target = party[targetIndex];
-            int healAmount = ran.nextInt(30-5+1) + 5; 
-            target.setHP(target.getHP() + healAmount); 
+            int targetIndex;
+            Character target;
+            do{
+                targetIndex = objGame.readInt("\nChoose a party member to heal: ", 3)-1;
+                target = party[targetIndex];
+                if(!target.isAlive()){
+                    scan.nextLine();
+                    targetIndex = -1;
+                    System.out.println(target.displayName()+" is down!");
+                }                
+            } while(targetIndex == -1);
             
+            if(target instanceof CharacterElara){
+                skillTwo();
+                return 0;
+            }
+            
+            int healAmount = ran.nextInt(30-5+1) + 5; 
+            target.setHP(target.getHP() + healAmount);             
             System.out.println("Elara healed "+target.displayName() +" for "+healAmount+" HP!");
             return healAmount;
         } else {
