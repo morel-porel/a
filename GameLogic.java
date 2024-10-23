@@ -15,7 +15,7 @@ public class GameLogic {
     public int readInt(String prompt, int userChoices){
         int input=0;
         do{
-            System.out.println(prompt);
+            System.out.print(prompt);
             try{
                 input = scan.nextInt();
                 if(input>userChoices||input < 1 ){
@@ -64,7 +64,7 @@ public class GameLogic {
             System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+")");
             System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+")");
             System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+")");
-            int action = readInt("\nChoose a skill:", 3); 
+            int action = readInt("\nChoose a skill: ", 3); 
             System.out.println();
             
             int damage;
@@ -76,9 +76,6 @@ public class GameLogic {
                         damage = Math.abs(damage + 2); // Extract actual damage
                         System.out.println("The enemy is stunned and will skip their next turn.");
                     }
-                    System.out.println("Original Damage: "+damage); 
-                    damage = activePlayer.applyBuff(damage);
-                    System.out.println("Damage after applying buff: "+ damage);
                     monster.setHP(monster.getHP() - damage);
                     break;
 
@@ -91,15 +88,12 @@ public class GameLogic {
                         System.out.println("2. Heal another party member");
                         int healChoice = readInt("\nChoose an option: ", 2);
                         if(healChoice == 1){
-                            damage = activePlayer.skillTwo(); // Heal herself
+                            activePlayer.skillTwo(); // Heal herself
                         } else {
                             ((CharacterElara)activePlayer).skillTwo(party); // Heal another party member
                         }
                     } else {
                         damage = activePlayer.skillTwo();
-                        System.out.println("Original Damage: "+damage);
-                        damage = activePlayer.applyBuff(damage);
-                        System.out.println("Damage after applying buff: "+ damage);
                         monster.setHP(monster.getHP()-damage);
                     }
                     break;
@@ -114,9 +108,6 @@ public class GameLogic {
                         }
                     } else {
                         damage = activePlayer.skillThree();
-                        System.out.println("Original Damage: "+damage);
-                        damage = activePlayer.applyBuff(damage);
-                        System.out.println("Damage after applying buff: "+ damage);
                         monster.setHP(monster.getHP() - damage);
                     }
                     break;
@@ -125,10 +116,20 @@ public class GameLogic {
                     System.out.println("Invalid choice!");
                     continue;
             }       
+            //buff deactivation
+            for (Character partyMember : party) {
+                if (partyMember.isBuffActive()) {
+                    partyMember.setBuffTurnsRemaining(partyMember.getBuffTurnsRemaining() - 1); // Decrement buff turns
+                    if (partyMember.getBuffTurnsRemaining() <= 0) {
+                        partyMember.setBuffActive(false); // Deactivate buff
+                        partyMember.setBuffPercentage(0); // Reset buff percentage
+                        System.out.println(partyMember.displayName() + "'s buff has expired.");
+                    }
+                }
+            }
             
-            System.out.println("\n" + monster.displayName() + " HP: " + monster.getHP());          
-
-            // Check if the monster is dead
+            System.out.println("\n" + monster.displayName() + " HP: " + monster.getHP());   
+            // Check if the slime is dead
             if (!monster.isAlive()) {
                 System.out.println("You defeated the " + monster.displayName() + "!");
                 break;
