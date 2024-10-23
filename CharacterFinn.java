@@ -18,8 +18,9 @@ public class CharacterFinn extends Character{
 
         //buff related variables
     private boolean buffActive = false;
-    private int buffTurnsRemaining = 2;
     private int buffPercentage = 0;
+    private int buffDamage = 0;
+    private int buffTurnsRemaining;
     
     public CharacterFinn (int HP, int MP){
         this.HP = HP;
@@ -62,13 +63,23 @@ public class CharacterFinn extends Character{
     public int skillOne() {
         Random ran = new Random();
         if (MP >= 30) {
-            int skillOneDamage = ran.nextInt(11) + 5; // 5 to 15 damage range
+            int skillOneDamage = applyBuff(ran.nextInt(11) + 5); // 5 to 15 damage range
+            MP -= 30;
             MP -= 30;
             if (ran.nextInt(100) < 50) { // % chance to stun
-                System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
+                if(isBuffActive()){
+                    System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage and stunned the enemy!");
+                } else {
+                    System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
+                }
+                
                 return -(skillOneDamage + 2); // Use negative damage to indicate stun
             }
-            System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
+            if(isBuffActive()){
+                System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
+            } else {
+                System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
+            }            
             return skillOneDamage; // Normal damage
         } else {
             System.out.println("Not enough MP.");
@@ -80,9 +91,13 @@ public class CharacterFinn extends Character{
     public int skillTwo(){
         Random ran = new Random();
         if(MP>=20){
-            int skillTwoDamage = ran.nextInt(25-10+1) + 10;
+            int skillTwoDamage = applyBuff(ran.nextInt(25-10+1) + 10);
             MP-=20;
-            System.out.println("Finn used Bombs! Dealt "+skillTwoDamage +" damage!");
+            if(isBuffActive()){
+                System.out.println("Finn used Bombs! Dealt "+(skillTwoDamage-buffDamage) +" + "+buffDamage+" damage!");
+            } else {
+                System.out.println("Finn used Bombs! Dealt "+skillTwoDamage +" damage!");
+            }            
             return skillTwoDamage;
         } else {
             System.out.println("Not enough MP.");
@@ -97,10 +112,14 @@ public class CharacterFinn extends Character{
                 System.out.println("Not enough HP! 50 HP Needed.");
                 return 0;
             }
-            int skillThreeDamage = ran.nextInt(100-75+1) + 75;
+            int skillThreeDamage = applyBuff(ran.nextInt(100-75+1) + 75);
             MP-=5;
             HP-=50;
-            System.out.println("Finn used 'I am Atomic'! Dealt "+skillThreeDamage +" damage!");
+            if(isBuffActive()){
+                System.out.println("Finn used 'I am Atomic'! Dealt "+(skillThreeDamage-buffDamage) +" + "+buffDamage+" damage!");
+            } else {
+                System.out.println("Finn used 'I am Atomic'! Dealt "+skillThreeDamage +" damage!");
+            }            
             return skillThreeDamage;
         } else {
             System.out.println("Not enough MP.");
@@ -111,13 +130,8 @@ public class CharacterFinn extends Character{
     @Override
     public int applyBuff(int baseDamage){
         if(buffActive){
-            int modifiedDamage = baseDamage + (baseDamage * buffPercentage / 100);
-            buffTurnsRemaining--;
-            if (buffTurnsRemaining <= 0){
-                buffActive = false; // Reset buff after its duration
-                buffPercentage = 0;
-                System.out.println("Buff has expired."); // return base damage/ original damage
-            }
+            buffDamage = baseDamage * buffPercentage / 100;
+            int modifiedDamage = baseDamage + buffDamage;
             return modifiedDamage;//increase damage by 20%
         }
         return baseDamage;// No buff applied
@@ -135,6 +149,14 @@ public class CharacterFinn extends Character{
     public void setBuffTurnsRemaining(int buffTurnsRemaining){
         this.buffTurnsRemaining = buffTurnsRemaining;
     }
+    @Override    
+    public boolean isBuffActive(){
+        return buffActive;
+    }
+    @Override    
+    public int getBuffTurnsRemaining(){
+        return buffTurnsRemaining;
+    }
     @Override
     public String getSkillOne() {
         return "Traps (Can stun for one turn)";
@@ -147,7 +169,7 @@ public class CharacterFinn extends Character{
 
     @Override
     public String getSkillThree() {
-        return "'I am Atomic'";
+        return "'I am Atomic' (Depletes Finn's Health)";
     }    
     
     @Override
