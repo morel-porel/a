@@ -12,16 +12,22 @@ import java.util.*;
 public class GameLogic {    
     static Scanner scan = new Scanner(System.in);
     
-    public static int readInt(String prompt, int userChoices){
-        int input;
+    public int readInt(String prompt, int userChoices){
+        int input=0;
         do{
             System.out.println(prompt);
             try{
                 input = scan.nextInt();
-            }catch(Exception e){
+                if(input>userChoices||input < 1 ){
+                    throw new ArithmeticException();
+                }
+            } catch(ArithmeticException e){
+                scan.nextLine();
+                System.out.print("Invalid Input!");
+            } catch(Exception e){
                 scan.nextLine();
                 input = -1;
-                System.out.println("Please enter an integer!");
+                System.out.print("Please enter an integer!");
             }
         }while(input < 1 || input > userChoices);
         return input;
@@ -134,12 +140,11 @@ public class GameLogic {
                 enemyStunned = false; // Reset stun status after skipping turn
             } else {
                 // Enemy attacks a random player
-                System.out.println("\n" + monster.displayName() + "'s turn.");
                 Character target;
                 do {
                     target = party[(int) (Math.random() * party.length)];  // Select a random party member
                 } while (!target.isAlive());  // Repeat if the selected character is not alive
-                System.out.println("\n" + target.displayName() + " targeted.");
+                System.out.println("\n" + monster.displayName() + "'s turn and targeted "+target.displayName()+"!");
                 damage = monster.skillOne();
                 System.out.println();
                 target.setHP(target.getHP() - damage);
