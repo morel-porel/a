@@ -16,8 +16,9 @@ public class CharacterJascha extends Character{
 
     //buff related variables
     private boolean buffActive = false;
-    private int buffTurnsRemaining = 2;
     private int buffPercentage = 0;
+    private int buffDamage = 0;
+    private int buffTurnsRemaining;
     
     public CharacterJascha (int HP, int MP){
         this.HP = HP;
@@ -59,9 +60,13 @@ public class CharacterJascha extends Character{
     public int skillOne(){
         Random ran = new Random();
         if(MP>=10){
-            int skillOneDamage = ran.nextInt(15-5+1) + 5;
+            int skillOneDamage = applyBuff(ran.nextInt(15-5+1) + 5);
             MP-=10;
-            System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+skillOneDamage +" damage!");
+            if(isBuffActive()){
+                System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+(skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
+            } else {
+                System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+skillOneDamage +" damage!");
+            }
             return skillOneDamage;
         } else {
             System.out.println("Not enough MP.");
@@ -72,9 +77,14 @@ public class CharacterJascha extends Character{
     public int skillTwo(){
         Random ran = new Random();
         if(MP>=15){
-            int skillTwoDamage = ran.nextInt(20-5+1) + 5;
+            int skillTwoDamage = applyBuff(ran.nextInt(20-5+1) + 5);
             MP-=15;
-            System.out.println("Jascha used Moonlight Swords! Dealt "+skillTwoDamage +" damage!");
+            if(isBuffActive()){
+                System.out.println("Jascha used Moonlight Swords! Dealt "+(skillTwoDamage-buffDamage) +" + "+buffDamage+" damage!");
+            }else {
+                System.out.println("Jascha used Moonlight Swords! Dealt "+skillTwoDamage +" damage!");
+            }
+            
             return skillTwoDamage;
         } else {
             System.out.println("Not enough MP.");
@@ -85,9 +95,14 @@ public class CharacterJascha extends Character{
     public int skillThree(){
         Random ran = new Random();
         if(MP>=35){
-            int skillThreeDamage = ran.nextInt(50-15+1) + 15;
+            int skillThreeDamage = applyBuff(ran.nextInt(50-15+1) + 15);
             MP-=35;
-            System.out.println("Jascha used Ancient Kick! Dealt "+skillThreeDamage +" damage!");
+            if(isBuffActive()){
+                System.out.println("Jascha used Ancient Kick! Dealt "+(skillThreeDamage-buffDamage) +" + "+buffDamage+" damage!");
+            } else {
+                System.out.println("Jascha used Ancient Kick! Dealt "+skillThreeDamage +" damage!");
+            }
+            
             return skillThreeDamage;
         } else {
             System.out.println("Not enough MP.");
@@ -97,13 +112,8 @@ public class CharacterJascha extends Character{
     @Override
     public int applyBuff(int baseDamage){
         if(buffActive){
-            int modifiedDamage = baseDamage + (baseDamage * buffPercentage / 100);
-            buffTurnsRemaining--;
-            if (buffTurnsRemaining <= 0){
-                buffActive = false; // Reset buff after its duration
-                buffPercentage = 0;
-                System.out.println("Buff has expired."); // return base damage/ original damage
-            }
+            buffDamage = baseDamage * buffPercentage / 100;
+            int modifiedDamage = baseDamage + buffDamage;
             return modifiedDamage;//increase damage by 20%
         }
         return baseDamage;// No buff applied
@@ -120,6 +130,14 @@ public class CharacterJascha extends Character{
     @Override    
     public void setBuffTurnsRemaining(int buffTurnsRemaining){
         this.buffTurnsRemaining = buffTurnsRemaining;
+    }
+    @Override    
+    public boolean isBuffActive(){
+        return buffActive;
+    }
+    @Override    
+    public int getBuffTurnsRemaining(){
+        return buffTurnsRemaining;
     }
     @Override
     public String getSkillOne() {
