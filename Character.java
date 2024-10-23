@@ -40,5 +40,6 @@ public abstract class Character {
     public abstract void setBuffPercentage(int buffPercentage);
     public abstract void setBuffActive(boolean buffActive);
     public abstract void setBuffTurnsRemaining(int buffTurnsRemaining);
-    
+    public abstract boolean isBuffActive();
+    public abstract int getBuffTurnsRemaining();
 }
