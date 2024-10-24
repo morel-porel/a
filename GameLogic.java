@@ -12,7 +12,7 @@ import java.util.*;
 public class GameLogic {    
     static Scanner scan = new Scanner(System.in);
     
-    public int readInt(String prompt, int userChoices){
+    public static int readInt(String prompt, int userChoices){
         int input=0;
         do{
             System.out.print(prompt);
@@ -33,7 +33,7 @@ public class GameLogic {
         return input;
     }
     
-    public void battle(Monster monster, Character[] party){
+    public static void battle(Monster monster, Character[] party){
         
         monster.show();
         System.out.println(monster.displayName()+" is ready to strike!\n"); 
