@@ -86,7 +86,6 @@ public class CharacterElara extends Character{
     public int skillTwo(Character[] party){
         Scanner scan = new Scanner(System.in);
         Random ran = new Random();
-        GameLogic objGame = new GameLogic();
         if(MP>=20){
             MP-=20;
             System.out.println("\nElara used Heal!");
@@ -98,7 +97,7 @@ public class CharacterElara extends Character{
             int targetIndex;
             Character target;
             do{
-                targetIndex = objGame.readInt("\nChoose a party member to heal: ", 3)-1;
+                targetIndex = GameLogic.readInt("\nChoose a party member to heal: ", 3)-1;
                 target = party[targetIndex];
                 if(!target.isAlive()){
                     scan.nextLine();
