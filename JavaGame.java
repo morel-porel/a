@@ -19,9 +19,8 @@ public class JavaGame {
         CharacterElara Elara = new CharacterElara(150, 50);
         CharacterFinn Finn = new CharacterFinn(150, 50);
         Character[] party = { Jascha, Elara, Finn };
-        GameLogic g = new GameLogic();
         MonsterSlime slime = new MonsterSlime(200);
-        g.battle(slime, party);
+        GameLogic.battle(slime, party);
 
     }
     
