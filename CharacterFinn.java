@@ -65,7 +65,6 @@ public class CharacterFinn extends Character{
         if (MP >= 30) {
             int skillOneDamage = applyBuff(ran.nextInt(11) + 5); // 5 to 15 damage range
             MP -= 30;
-            MP -= 30;
             if (ran.nextInt(100) < 50) { // % chance to stun
                 if(isBuffActive()){
                     System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage and stunned the enemy!");
