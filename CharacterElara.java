@@ -125,7 +125,7 @@ public class CharacterElara extends Character{
     public int skillThree(){
         Random ran = new Random();
         if(MP>=50){
-            int buffPercentage = ran.nextInt(21);
+            int buffPercentage = ran.nextInt(50-10+1) + 10;
             MP-=50;
             System.out.println("Elara used Buff! Party attacks now deal "+buffPercentage +"% more damage in the next turn!");
             return buffPercentage;
