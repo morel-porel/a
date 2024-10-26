@@ -11,6 +11,18 @@ import java.util.*;
  */
 public class GameLogic {    
     static Scanner scan = new Scanner(System.in);
+    static Inventory inv = new Inventory();
+    static Random ran = new Random();
+    
+    //Color codes, newly added.
+    
+    public static final String RESET = "\u001B[0m";  // Reset to default
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String MAGENTA = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
     
     public static int readInt(String prompt, int userChoices){
         int input=0;
@@ -43,7 +55,7 @@ public class GameLogic {
             // Player selects a character
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
-                    System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + "/"+party[i].getMaxHP()+" | MP: "+party[i].getMP()+"/"+party[i].getMaxMP()+")");
+                    System.out.println(RESET + (i + 1) + ". " + RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")");
                 }
             }
             
@@ -64,7 +76,8 @@ public class GameLogic {
             System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+")");
             System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+")");
             System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+")");
-            int action = readInt("\nChoose a skill: ", 3); 
+            System.out.println("4. Open inventory");
+            int action = readInt(RESET + "\nChoose a skill: ", 4); 
             System.out.println();
             
             int damage;
@@ -111,7 +124,25 @@ public class GameLogic {
                         monster.setHP(monster.getHP() - damage);
                     }
                     break;
-
+                
+                case 4:
+                    inv.displayInventory();
+                    System.out.println("1. Use health potion");
+                    System.out.println("2. Use mana potion");
+                    action = readInt("\nChoose a action: ", 2); 
+                    switch(action){
+                        case 1:
+                            inv.useHealthPotion(activePlayer);
+                            break;
+                        case 2:
+                            inv.useManaPotion(activePlayer);
+                            break;
+                        default:
+                            System.out.println("Invalid Choice!");
+                            
+                    }
+                    
+                    break;
                 default:
                     System.out.println("Invalid choice!");
                     continue;
@@ -128,16 +159,28 @@ public class GameLogic {
                 }
             }
             
-            System.out.println("\n" + monster.displayName() + " HP: " + monster.getHP());   
+            System.out.println("\n" + RED + monster.displayName() + RED + " HP: " + monster.getHP());   
             // Check if the slime is dead
             if (!monster.isAlive()) {
                 System.out.println("You defeated the " + monster.displayName() + "!");
+                int addHP = ran.nextInt(10-5+1) + 5, addMP = ran.nextInt(10-5+1) + 5, addXP = ran.nextInt(15-5+1) + 5;
+                inv.addXp(addXP);
+                inv.addHealthPotion(addHP);
+                inv.addManaPotion(addMP);
+                inv.addGold(100);
+                System.out.println();
+                System.out.println("Rewards: ");
+                System.out.println(GREEN + "+"+addXP+" XP");
+                System.out.println(GREEN +"+100 gold");
+                System.out.println(GREEN +"+"+addHP+" health potions");
+                System.out.println(GREEN +"+"+addMP+" mana potions");
+                System.out.println();
                 break;
             }
 
             // If the enemy is stunned, skip their turn
             if (enemyStunned) {
-                System.out.println(monster.displayName() + " is stunned and skips their turn.");
+                System.out.println(RED + monster.displayName() + " is stunned and skips their turn.\n");
                 enemyStunned = false; // Reset stun status after skipping turn
             } else {
                 // Enemy attacks a random player
