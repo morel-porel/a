@@ -103,7 +103,7 @@
                 int skillOneDamage = controlled.skillOne();
                 
                 targetHero.setHP(targetHero.getHP() - skillOneDamage);
-                System.out.println("Corrupted Khaimon used Mind control on "+ controlled.displayName() + " to used a skill on " + targetHero.displayName() + " dealing " + skillOneDamage + " damage!");
+                System.out.println("Corrupted Khaimon used mind control on "+ controlled.displayName() + " to use "+controlled.getSkillOne()+" on " + targetHero.displayName() + " dealing " + skillOneDamage + " damage!");
                 return skillOneDamage;
                 }else{
                     System.out.println("Not enough MP for mind control.");
