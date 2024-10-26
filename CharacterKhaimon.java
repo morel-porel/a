@@ -17,6 +17,11 @@
         private int maxHP;
         private int MP;
         private int maxMP;
+        private int buffTurnsRemaining;
+        private boolean buffActive;
+        private int buffDamage;
+        private int buffPercentage;
+        
         public CharacterKhaimon(int HP, int MP){
             this.HP = HP;
             this.maxHP = HP;
@@ -52,6 +57,37 @@
         public int getMaxMP() {
             return maxMP;
         }
+
+        @Override
+        public int getBuffTurnsRemaining(){
+            return buffTurnsRemaining;
+        }
+
+        @Override
+    public int applyBuff(int baseDamage){
+        if(buffActive){
+            buffDamage = baseDamage * buffPercentage / 100;
+            int modifiedDamage = baseDamage + buffDamage;
+            return modifiedDamage;//increase damage by 20%
+        }
+        return baseDamage;// No buff applied
+    }
+    @Override
+    public void setBuffPercentage(int buffPercentage){
+        this.buffPercentage = buffPercentage;
+    }
+    @Override    
+    public void setBuffActive(boolean buffActive){
+        this.buffActive = buffActive;
+    }
+    @Override    
+    public void setBuffTurnsRemaining(int buffTurnsRemaining){
+        this.buffTurnsRemaining = buffTurnsRemaining;
+    }
+    @Override    
+    public boolean isBuffActive(){
+        return buffActive;
+    }
 
         
         public int skillOne(Character[] party) {
@@ -154,4 +190,5 @@
         public int skillOne(){
             return 0;
         }
+        
     }
