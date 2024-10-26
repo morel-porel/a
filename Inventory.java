@@ -14,11 +14,11 @@ public class Inventory {
     private int gold;
     private int xp;
     
-    public Inventory(int healthPotions, int manaPotions, int gold, int xp) {
-        this.healthPotions = healthPotions;
-        this.manaPotions = manaPotions;
-        this.gold = gold;
-        this.xp = xp;
+    public Inventory() {
+        this.healthPotions = 10;
+        this.manaPotions = 10;
+        this.gold = 0;
+        this.xp = 0;
     }
     
     public int getHealthPotions() {
@@ -34,7 +34,7 @@ public class Inventory {
             healthPotions--;
             int healAmount = 50;
             target.setHP(target.getHP() + healAmount);  
-            System.out.println("You used a health potion.");
+            System.out.println(target.displayName()+" used a health potion, restored 50HP.");
         } else {
             System.out.println("No health potions left!");
         }
@@ -54,7 +54,7 @@ public class Inventory {
             manaPotions--;
             int healAmount = 50;
             target.setMP(target.getMP() + healAmount);  
-            System.out.println("You used a mana potion.");
+            System.out.println(target.displayName()+" used a mana potion, restored 50MP.");
         } else {
             System.out.println("No mana potions left!");
         }
@@ -89,11 +89,13 @@ public class Inventory {
 
     // Display Inventory status
     public void displayInventory() {
+        System.out.println();
         System.out.println("Inventory:");
+        System.out.println("XP: " + xp);
         System.out.println("Gold: " + gold);
         System.out.println("Health Potions: " + healthPotions);
         System.out.println("Mana Potions: " + manaPotions);
-        System.out.println("XP: " + xp);
+        System.out.println();
     }
 
 }
