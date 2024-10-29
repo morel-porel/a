@@ -190,5 +190,9 @@
         public int skillOne(){
             return 0;
         }
+        @Override
+            public void lvlUpCharacter() {
+            System.out.println("Khaimon is at max level!");
+        }    
         
     }
