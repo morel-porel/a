@@ -175,8 +175,20 @@ public class GameLogic {
                 System.out.println(GREEN +"+"+addHP+" health potions");
                 System.out.println(GREEN +"+"+addMP+" mana potions");
                 System.out.println();
-                break;
+
+                // NEW BLOCK LINE 180 to 189 << PROMPT FOR SHOP AFTER PATAY OG MONSTER
+                if(inv.getGold() >= 10){
+                    System.out.print("Would you like to visit the shop? (YES/NO): ");
+                    scan.nextLine();
+                    String response = scan.nextLine();
+                    if(response.equalsIgnoreCase("yes")){
+                        shopMenu(inv);
+                    }
+                }
+                System.out.println("Prepare for next batttle...");
+                continue;
             }
+            
 
             // If the enemy is stunned, skip their turn
             if (enemyStunned) {
@@ -213,4 +225,59 @@ public class GameLogic {
         }
         return false;
     }
+
+
+    // KANI BAG.o NI FOR SHOPMENU
+    public static void shopMenu(Inventory playerInventory) {
+    boolean shopping = true;
+
+    System.out.println("Hoho, you found me! Welcome to the Secret Shop!");
+
+    while (shopping) {
+        System.out.println("\nWhat would you like to do?");
+        System.out.println("1. Buy Health Potion (10 gold each)");
+        System.out.println("2. Buy Mana Potion (10 gold each)");
+        System.out.println("3. Exit Shop");
+
+        System.out.print("Enter your choice (1-3): ");
+        int choice = scan.nextInt();
+
+        switch (choice) {
+            case 1:
+                System.out.print("How many Health Potions would you like to buy? ");
+                int healthPotionQuantity = scan.nextInt();
+                int healthPotionCost = healthPotionQuantity * 10;
+
+                if (playerInventory.getGold() >= healthPotionCost) {
+                    playerInventory.addHealthPotion(healthPotionQuantity);
+                    playerInventory.spendGold(healthPotionCost);
+                    System.out.println("You bought " + healthPotionQuantity + " Health Potions!");
+                } else {
+                    System.out.println("Not enough gold!");
+                }
+                break;
+            case 2:
+                System.out.print("How many Mana Potions would you like to buy? ");
+                int manaPotionQuantity = scan.nextInt();
+                int manaPotionCost = manaPotionQuantity * 10;
+
+                if (playerInventory.getGold() >= manaPotionCost) {
+                    playerInventory.addManaPotion(manaPotionQuantity);
+                    playerInventory.spendGold(manaPotionCost);
+                    System.out.println("You bought " + manaPotionQuantity + " Mana Potions!");
+                } else {
+                    System.out.println("Not enough gold!");
+                }
+                break;
+            case 3:
+                shopping = false;
+                System.out.println("Thanks for visiting the shop!");
+                break;
+            default:
+                System.out.println("Invalid choice! Please select again.");
+                
+        }
+    }
+}
+    
 }
