@@ -185,5 +185,13 @@ public class CharacterFinn extends Character{
     public int skillThreeMP() {
         return 5;
     }
- 
+
+    @Override
+    public void lvlUpCharacter(){
+        maxHP += 20;
+        maxMP += 30;
+        HP=maxHP;
+        MP=maxMP;
+              
+    }
 }
