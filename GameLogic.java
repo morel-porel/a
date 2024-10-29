@@ -245,7 +245,7 @@ public class GameLogic {
     // KANI BAG.o NI FOR SHOPMENU
     public static void shopMenu(Inventory playerInventory) {
     boolean shopping = true;
-
+    System.out.println();
     System.out.println("( ; 7,_>7) Hoho, you found me! Welcome to the Secret Shop!");
 
     while (shopping) {
