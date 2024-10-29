@@ -36,6 +36,9 @@ public abstract class Character {
     public void show(){
         System.out.println("You chose: ");
     }
+    public void revive(){
+        setHP(1);
+    }
     public abstract int applyBuff(int baseDamage);
     public abstract void setBuffPercentage(int buffPercentage);
     public abstract void setBuffActive(boolean buffActive);
