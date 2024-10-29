@@ -192,5 +192,13 @@ public class CharacterElara extends Character{
     public int skillThreeMP() {
         return 50;
     }
- 
+    
+    @Override
+    public void lvlUpCharacter(){
+        maxHP += 10;
+        maxMP += 50;
+        HP=maxHP;
+        MP=maxMP;
+              
+    }
 }
