@@ -85,13 +85,32 @@ public class Inventory {
 
     public void addXp(int amount) {
         this.xp += amount;
+        if(xp>=xpReq){
+            lvlUp(party);            
+        }
     }
-
+    
+    public void lvlUp(Character[] party){
+        while(xp>=xpReq){
+            lvl++;
+            xp-=xpReq;
+            xpReq+=100;
+            for (Character character : party) {
+                if (character.isAlive()) {
+                    character.lvlUpCharacter();
+                }
+            }
+            System.out.println("Party has leveled up!");
+            System.out.println("HP and MP has been restored!");
+            
+        }
+    }
+    
     // Display Inventory status
     public void displayInventory() {
         System.out.println();
         System.out.println("Inventory:");
-        System.out.println("XP: " + xp);
+        System.out.println("XP: " + xp + " / "+ xpReq);
         System.out.println("Gold: " + gold);
         System.out.println("Health Potions: " + healthPotions);
         System.out.println("Mana Potions: " + manaPotions);
