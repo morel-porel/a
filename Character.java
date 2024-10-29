@@ -42,4 +42,6 @@ public abstract class Character {
     public abstract void setBuffTurnsRemaining(int buffTurnsRemaining);
     public abstract boolean isBuffActive();
     public abstract int getBuffTurnsRemaining();
+
+    public abstract void lvlUpCharacter();
 }
