@@ -182,6 +182,12 @@ public class GameLogic {
             // Check if the slime is dead
             if (!monster.isAlive()) {
                 System.out.println("You defeated the " + monster.displayName() + "!");
+                //recover downed members
+                for(Character partyMember : party){
+                    if(!partyMember.isAlive()){
+                        partyMember.revive();
+                    }
+                }
                 int addHP = ran.nextInt(10-5+1) + 5, addMP = ran.nextInt(10-5+1) + 5, addXP = ran.nextInt(15-5+1) + 5;
                 inv.addXp(addXP, party);
                 inv.addHealthPotion(addHP);
