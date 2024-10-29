@@ -229,8 +229,6 @@ public class GameLogic {
                 break;
             }
         }
-
-        scan.close();
     }
 
     // Utility method to check if any player in the party is still alive
