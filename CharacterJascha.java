@@ -168,5 +168,14 @@ public class CharacterJascha extends Character{
     public int skillThreeMP() {
         return 35;
     }
+    
+    @Override
+    public void lvlUpCharacter(){
+        maxHP += 50;
+        maxMP += 35;
+        HP=maxHP;
+        MP=maxMP;
+              
+    }
  
 }
