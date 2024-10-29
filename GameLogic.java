@@ -44,6 +44,25 @@ public class GameLogic {
         }while(input < 1 || input > userChoices);
         return input;
     }
+
+    public static boolean yesOrNo(String prompt){        
+        scan.nextLine();
+        while(true){
+            try{
+                System.out.print(prompt + " (YES/NO): ");
+                String input = scan.nextLine();
+                if(input.equalsIgnoreCase("yes")){
+                    return true;
+                } else if (input.equalsIgnoreCase("no")){
+                    return false;
+                } else {
+                    throw new InputMismatchException("Invalid input. Please type 'yes' or 'no'");
+                }
+            } catch (InputMismatchException e){
+                System.out.println(e.getMessage());
+            }
+        }
+    }
     
     public static void battle(Monster monster, Character[] party){
         
@@ -178,14 +197,12 @@ public class GameLogic {
 
                 // NEW BLOCK LINE 180 to 189 << PROMPT FOR SHOP AFTER PATAY OG MONSTER
                 if(inv.getGold() >= 10){
-                    System.out.print("Would you like to visit the shop? (YES/NO): ");
-                    scan.nextLine();
-                    String response = scan.nextLine();
-                    if(response.equalsIgnoreCase("yes")){
+                    boolean response = yesOrNo("Would you like to visit the shop?");
+                    if(response){
                         shopMenu(inv);
                     }
                 }
-                System.out.println("Prepare for next batttle...");
+                System.out.println("Prepare for next battle...");
                 continue;
             }
             
@@ -231,7 +248,7 @@ public class GameLogic {
     public static void shopMenu(Inventory playerInventory) {
     boolean shopping = true;
 
-    System.out.println("Hoho, you found me! Welcome to the Secret Shop!");
+    System.out.println("( ; 7,_>7) Hoho, you found me! Welcome to the Secret Shop!");
 
     while (shopping) {
         System.out.println("\nWhat would you like to do?");
@@ -239,13 +256,12 @@ public class GameLogic {
         System.out.println("2. Buy Mana Potion (10 gold each)");
         System.out.println("3. Exit Shop");
 
-        System.out.print("Enter your choice (1-3): ");
-        int choice = scan.nextInt();
+        int choice = readInt("\nEnter your choice (1-3): ", 3);
 
         switch (choice) {
             case 1:
                 System.out.print("How many Health Potions would you like to buy? ");
-                int healthPotionQuantity = scan.nextInt();
+                int healthPotionQuantity = readInt("\nQuantity: ", 100);
                 int healthPotionCost = healthPotionQuantity * 10;
 
                 if (playerInventory.getGold() >= healthPotionCost) {
@@ -258,7 +274,7 @@ public class GameLogic {
                 break;
             case 2:
                 System.out.print("How many Mana Potions would you like to buy? ");
-                int manaPotionQuantity = scan.nextInt();
+                int manaPotionQuantity = readInt("\nQuantity: ", 100);
                 int manaPotionCost = manaPotionQuantity * 10;
 
                 if (playerInventory.getGold() >= manaPotionCost) {
