@@ -15,10 +15,12 @@ public class Inventory {
     private int xp;
     
     public Inventory() {
-        this.healthPotions = 10;
-        this.manaPotions = 10;
-        this.gold = 0;
-        this.xp = 0;
+        healthPotions = 10;
+        manaPotions = 10;
+        gold = 0;
+        xp = 0;
+        xpReq = 100;
+        lvl=1;
     }
     
     public int getHealthPotions() {
@@ -83,8 +85,8 @@ public class Inventory {
         return xp;
     }
 
-    public void addXp(int amount) {
-        this.xp += amount;
+    public void addXp(int amount, Character[] party) {
+        xp += amount;
         if(xp>=xpReq){
             lvlUp(party);            
         }
@@ -100,10 +102,9 @@ public class Inventory {
                     character.lvlUpCharacter();
                 }
             }
-            System.out.println("Party has leveled up!");
-            System.out.println("HP and MP has been restored!");
-            
+            System.out.println("Party has leveled up!");    
         }
+        System.out.println("HP and MP have been restored!");
     }
     
     // Display Inventory status
