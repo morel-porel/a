@@ -13,6 +13,8 @@ public class Inventory {
     private int manaPotions;
     private int gold;
     private int xp;
+    private int xpReq;
+    private int lvl;
     
     public Inventory() {
         healthPotions = 10;
