@@ -29,6 +29,16 @@ public abstract class Character {
     public abstract int skillOneMP(); 
     public abstract int skillTwoMP(); 
     public abstract int skillThreeMP();
+
+    // range
+    public abstract void setDMG1(String skillRangeOne);
+    public abstract String getDMG1();
+    
+    public abstract void setDMG2(String skillRangeTwo);
+    public abstract String getDMG2();
+    
+    public abstract void setDMG3(String skillRangeThree);
+    public abstract String getDMG3();
     
     public boolean isAlive() {
         return getHP() > 0;
