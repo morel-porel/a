@@ -21,6 +21,11 @@
         private boolean buffActive;
         private int buffDamage;
         private int buffPercentage;
+
+        //range
+    private String range1;
+    private String range2;
+    private String range3;
         
         public CharacterKhaimon(int HP, int MP){
             this.HP = HP;
@@ -193,6 +198,35 @@
         @Override
             public void lvlUpCharacter() {
             System.out.println("Khaimon is at max level!");
-        }    
+        }
+
+    // wala pa na update iyang damage range
+    // range1
+    @Override
+    public void setDMG1(String range1){
+        this.range1 = range1;
+    }
+    @Override 
+    public String getDMG1(){
+        return "DMG: 5-15";
+    }
+    // range 2
+    @Override
+    public void setDMG2(String range2){
+        this.range2 = range2;
+    }
+    @Override 
+    public String getDMG2(){
+        return "DMG: 10-25";
+    }
+    // range 3
+    @Override
+    public void setDMG3(String range3){
+        this.range3 = range3;
+    }
+    @Override 
+    public String getDMG3(){
+        return "DMG: 75-100";
+    }
         
     }
