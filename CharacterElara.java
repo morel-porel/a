@@ -20,6 +20,11 @@ public class CharacterElara extends Character{
     private int buffPercentage = 0;
     private int buffDamage = 0;
     private int buffTurnsRemaining;
+
+    //range
+    private String range1;
+    private String range2;
+    private String range3;
     
     public CharacterElara (int HP, int MP){
         this.HP = HP;
@@ -200,5 +205,33 @@ public class CharacterElara extends Character{
         HP=maxHP;
         MP=maxMP;
               
+    }
+
+    // range1
+    @Override
+    public void setDMG1(String range1){
+        this.range1 = range1;
+    }
+    @Override 
+    public String getDMG1(){
+        return "DMG: 1";
+    }
+    // range 2
+    @Override
+    public void setDMG2(String range2){
+        this.range2 = range2;
+    }
+    @Override 
+    public String getDMG2(){
+        return "HEAL: 5HP - 30HP";
+    }
+    // range 3
+    @Override
+    public void setDMG3(String range3){
+        this.range3 = range3;
+    }
+    @Override 
+    public String getDMG3(){
+        return "BUFF: 10DMG - 50DMG";
     }
 }
