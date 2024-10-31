@@ -92,9 +92,9 @@ public class GameLogic {
 
             // Player chooses an action
             System.out.println("\n" + activePlayer.displayName() + "'s turn.");
-            System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+")");
-            System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+")");
-            System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+")");
+            System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+ " | "+activePlayer.getDMG1()+")");
+            System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+ " | "+activePlayer.getDMG2()+")");
+            System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+ " | "+activePlayer.getDMG3()+")");
             System.out.println("4. Open inventory");
             int action = readInt(RESET + "\nChoose a skill: ", 4); 
             System.out.println();
@@ -145,27 +145,32 @@ public class GameLogic {
                     break;
                 
                 case 4:
+                    boolean inInventory = true;
+
+                while (inInventory) {
                     inv.displayInventory();
                     System.out.println("1. Use health potion");
                     System.out.println("2. Use mana potion");
-                    action = readInt("\nChoose a action: ", 2); 
-                    switch(action){
+                    System.out.println("3. RETURN"); // Option to exit inventory
+
+                    action = readInt("\nChoose an action: ", 3); // Update to allow choice 1-3
+
+                    switch (action) {
                         case 1:
                             inv.useHealthPotion(activePlayer);
                             break;
                         case 2:
                             inv.useManaPotion(activePlayer);
                             break;
+                        case 3:
+                            inInventory = false; // Exit inventory and return to battle menu
+                            break;
                         default:
                             System.out.println("Invalid Choice!");
-                            
                     }
-                    
-                    break;
-                default:
-                    System.out.println("Invalid choice!");
-                    continue;
-            }       
+                }
+                break;
+            }
             //buff deactivation
             for (Character partyMember : party) {
                 if (partyMember.isBuffActive()) {
