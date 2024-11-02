@@ -27,7 +27,7 @@
     private String range2;
     private String range3;
         
-        public CharacterKhaimon(int HP, int MP){
+        public CharacterKhaimon(){
             HP = 500;
             maxHP = HP;
     
