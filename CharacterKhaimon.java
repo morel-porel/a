@@ -94,6 +94,15 @@
         return buffActive;
     }
 
+    public boolean isOnlyOneAlive(Character[] party) { //counts for last member alive
+        int aliveCount = 0;
+        for (Character character : party) {
+            if (character.isAlive()) {
+                aliveCount++;
+            }
+        }
+        return aliveCount == 1;
+    }
         
     public int skillOne(Character[] party, Character controlled) {
         Random ran = new Random();
@@ -101,7 +110,7 @@
             MP -= 100;
             System.out.println("Corrupted Khaimon used mind control!");
             Character target;
-            if (party.length == 1) { // Only one character left
+            if (isOnlyOneAlive(party)) { // Only one character left
                 System.out.println("Corrupted Khaimon twists the last hero’s mind against their own.");
                 int mentalDamage = applyBuff(ran.nextInt(50-10+1) + 10);
                 if(isBuffActive()){
