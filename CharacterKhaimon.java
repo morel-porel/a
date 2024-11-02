@@ -28,11 +28,11 @@
     private String range3;
         
         public CharacterKhaimon(int HP, int MP){
-            this.HP = HP;
-            this.maxHP = HP;
-
-            this.MP = MP;
-            this.maxMP = MP;        
+            HP = 500;
+            maxHP = HP;
+    
+            MP = 9999; //bc dali kayu ma drain
+            maxMP = MP;        
         }
         @Override
         public String displayName(){
@@ -95,26 +95,75 @@
     }
 
         
-        public int skillOne(Character[] party) {
-            Random ran = new Random();
-            if (MP >= 100 && party.length > 1) {
-                MP -= 100;
-
-                Character controlled = party[ran.nextInt(party.length)];
-                Character targetHero;
-                do{
-                    targetHero = party[ran.nextInt(party.length)];
-                }while(controlled == targetHero);
-                int skillOneDamage = controlled.skillOne();
-                
-                targetHero.setHP(targetHero.getHP() - skillOneDamage);
-                System.out.println("Corrupted Khaimon used mind control on "+ controlled.displayName() + " to use "+controlled.getSkillOne()+" on " + targetHero.displayName() + " dealing " + skillOneDamage + " damage!");
-                return skillOneDamage;
-                }else{
-                    System.out.println("Not enough MP for mind control.");
-                    return 0;
-                }
+    public int skillOne(Character[] party, Character controlled) {
+        Random ran = new Random();
+        if (MP >= 100 && party.length > 1) {
+            MP -= 100;
+            System.out.println("Corrupted Khaimon used mind control!");
+            Character target;
+            do{
+                target = party[ran.nextInt(party.length)];
+            }while(controlled == target || !target.isAlive());
+            int baseMP = controlled.getMP();
+            
+            int skillDamage=0;
+            int skillChoice = ran.nextInt(3) + 1;
+            switch (skillChoice) {
+                case 1:
+                    controlled.setMP(baseMP + controlled.skillOneMP());                    
+                    skillDamage = applyBuff(controlled.skillOne());
+                    int displayDamage = skillDamage;
+                    if(skillDamage<0) displayDamage = Math.abs(skillDamage + 2);
+                    if(isBuffActive()){
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + (displayDamage-buffDamage) +" + "+buffDamage+" damage!");
+                    } else {
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + displayDamage + " damage!");
+                    }
+                    break;
+                case 2:
+                    if(controlled instanceof CharacterElara){
+                        int heal=((CharacterElara)controlled).skillTwo(displayName());
+                        setHP(getHP()+heal);
+                        skillDamage=-99;
+                    } else {
+                        controlled.setMP(baseMP + controlled.skillTwoMP());
+                        skillDamage = applyBuff(controlled.skillTwo());
+                        if(isBuffActive()){
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + (skillDamage-buffDamage) +" + "+buffDamage+" damage!");
+                        } else {
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + skillDamage + " damage!");
+                        }
+                    }
+                    
+                    break;
+                case 3:
+                    if(controlled instanceof CharacterElara){
+                        int buffPercent = ((CharacterElara)controlled).skillThree(displayName());
+                        setBuffPercentage(buffPercent);
+                        setBuffActive(true);
+                        setBuffTurnsRemaining(2);
+                    } else {
+                        controlled.setMP(baseMP + controlled.skillThreeMP());
+                        skillDamage = applyBuff(controlled.skillThree());
+                        if(isBuffActive()){
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + (skillDamage-buffDamage) +" + "+buffDamage+" damage!");
+                        } else {
+                            System.out.println(controlled.displayName() + "'s attack hit " + target.displayName() + " dealing " + skillDamage + " damage!");
+                        }
+                    }
+                    break;
+                default:
+                    skillDamage = 0; // Fallback, though this shouldn't happen
+            }  
+            
+            controlled.setMP(baseMP); //reset MP
+            
+            return skillDamage;
+            }else{
+                System.out.println("Not enough MP for mind control.");
+                return 0;
             }
+    }
         //CHANGED skillTwo from Summon to Using abiliies of Ogre and Goblin
         @Override
         public int skillTwo(){
@@ -130,16 +179,18 @@
                 String skillUsed;
                 
                 if(skillChoice == 0){
-                    damageDealt = ogre.skillOne();
-                    skillUsed = "Ogre's Tree trunk";
+                    System.out.println("Corrupted Khaimon summoned an ogre!");
+                    damageDealt = applyBuff(ogre.skillOne());
+                    if(isBuffActive()){
+                        System.out.println("Attacks are amplified! "+(damageDealt-buffDamage) +" + "+buffDamage);
+                    }
+                } else{
+                    System.out.println("Corrupted Khaimon summoned a goblin!");
+                    damageDealt = applyBuff(goblin.skillOne());
+                    if(isBuffActive()){
+                        System.out.println("Attacks are amplified! "+(damageDealt-buffDamage) +" + "+buffDamage);
+                    }
                 }
-                else{
-                    damageDealt = goblin.skillOne();
-                    skillUsed = "Goblin's Club smush";
-                }
-                
-                
-                System.out.println("Corrupted Khaimon used " + skillUsed + "! Dealt " + damageDealt + " damage!");
                 return damageDealt; 
             }
             else{
@@ -152,13 +203,17 @@
         public int skillThree(){
             Random ran = new Random();
             if(MP>=150){
-                int skillThreeDamage = ran.nextInt(101) + 100;
+                int skillThreeDamage = applyBuff(ran.nextInt(101) + 100);
                 MP-=150;
-                System.out.println("Corrupted Khaimon used Meteor shower! Dealt "+skillThreeDamage +" damage!");
+                if(isBuffActive()){
+                    System.out.println("Corrupted Khaimon used Meteor shower! Dealt "+(skillThreeDamage-buffDamage) +" + "+buffDamage+" damage!");
+                } else {
+                    System.out.println("Corrupted Khaimon used Meteor shower! Dealt "+skillThreeDamage +" damage!");
+                }
                 return skillThreeDamage;
             } else {
                 System.out.println("Not enough MP.");
-                return -1;
+                return 0;
             }
         }
         
