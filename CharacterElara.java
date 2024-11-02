@@ -125,6 +125,21 @@ public class CharacterElara extends Character{
             return 0;
         }
     }
+    
+    //final battle ==================
+    public int skillTwo(String name){
+        Random ran = new Random();
+        if(MP>=20){
+            MP-=20;
+            int healAmount = ran.nextInt(30-5+1) + 5;         
+            System.out.println("Elara healed "+name +" for "+healAmount+" HP!");
+            return healAmount;
+        } else {
+            System.out.println("Not enough MP.");
+            return 0;
+        }
+    }
+    
     //to be fixed skillThree    
     @Override 
     public int skillThree(){
@@ -139,7 +154,19 @@ public class CharacterElara extends Character{
             return 0;
         }
     }
-    
+    //for final battle ============
+    public int skillThree(String name){
+        Random ran = new Random();
+        if(MP>=50){
+            int buffPercentage = ran.nextInt(50-10+1) + 10;
+            MP-=50;
+            System.out.println("Elara used Buff on "+name+"! His attacks now deal "+buffPercentage +"% more damage in the next turn!");
+            return buffPercentage;
+        } else {
+            System.out.println("Not enough MP.");
+            return 0;
+        }
+    }    
     @Override
     public int applyBuff(int baseDamage){
         if(buffActive){
