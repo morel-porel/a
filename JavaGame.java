@@ -32,6 +32,8 @@ public class JavaGame {
         MonsterSlime slime = new MonsterSlime(200);
         GameLogic.battle(slime, party);
 
+        //uncomment to try final battle vvv
+        //FinalBattle.finalBattle(party); 
     }
     
 }
