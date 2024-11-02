@@ -63,7 +63,10 @@ public class GameLogic {
             }
         }
     }
-    
+    public static void anythingToContinue(){
+        System.out.println("\nEnter anything to continue...");
+        scan.next();
+    }
     public static void battle(Monster monster, Character[] party){
         
         monster.show();
