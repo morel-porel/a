@@ -144,31 +144,4 @@ public class StoryLine {
                 System.out.println("Unknown stage in the journey.");
         }
     }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        StoryLine story = new StoryLine();
-
-        // Print the background story
-        story.printBackgroundStory();
-
-        // Print the descriptions of each world
-        System.out.println("\n--- Worlds ---");
-        story.printWorldDescription(World.WORLD_TREE);
-        story.printWorldDescription(World.WONDERLAND);
-        story.printWorldDescription(World.DARK_FOREST);
-
-        // Print character backstories
-        System.out.println("\n--- Character Backstories ---");
-        story.printCharacterBackstory("jascha");
-        story.printCharacterBackstory("elara");
-        story.printCharacterBackstory("finn");
-        story.printCharacterBackstory("khaimon");
-        story.printCharacterBackstory("tia");
-
-        // Progress through the story levels
-        story.progressThroughStory(World.WORLD_TREE);
-        story.progressThroughStory(World.WONDERLAND);
-        story.progressThroughStory(World.DARK_FOREST);
-    }
 }
