@@ -17,13 +17,13 @@ public class JavaGame {
     String[] intro = {
             "Long ago, beneath the branches of the ancient World Tree, a great prophecy was whispered: "
           + "\na hero, reborn every 5000 years, would rise to save the world from darkness. Now, that time has come.",
-            "In a world teetering on the edge of ruin, the once-vibrant World Tree fades as the Shadowmaw—a monstrous"
-          + "\nspirit once its guardian—spreads corruption through the land. The skies darken, the fairies weaken, and hope grows thin.",
+            "In a world teetering on the edge of ruin, the once-vibrant World Tree fades as the Shadowmaw--a monstrous"
+          + "\nspirit once its guardian--spreads corruption through the land. The skies darken, the fairies weaken, and hope grows thin.",
             "A young fairy named Elara, brave and hopeful, discovers the prophecy and sets out to find the reincarnated hero. "
           + "\nAlong her journey, she encounters Jascha, a warrior with a mysterious light, and together they venture through realms of wonder and peril.",
             "In the whimsical land of Wonderland, they meet Finn, a clever imp with a mischievous grin, and their party is complete.",
             "Together, Elara, Jascha, and Finn must face these shadows and decide the fate of their world. "
-          + "\nWill they restore the World Tree’s light or succumb to the darkness?",
+          + "\nWill they restore the World Tree's light or succumb to the darkness?",
             "The journey begins now..."
         };
       
