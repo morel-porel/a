@@ -23,6 +23,7 @@ public class GameLogic {
     public static final String BLUE = "\u001B[34m";
     public static final String MAGENTA = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
+    public static final String RED_BACKGROUND = "\033[41m";
     
     public static int readInt(String prompt, int userChoices){
         int input=0;
@@ -67,6 +68,29 @@ public class GameLogic {
         System.out.println("\nEnter anything to continue...");
         scan.next();
     }
+
+    public static void clearConsole(){
+        for(int i=0;i<100;i++){
+            System.out.println();
+        }
+    }
+    
+    public static void printSeparator(int n){
+        for(int i = 0 ; i < n ; i++){ //n is number of dashes
+            System.out.print("-");
+        }
+        System.out.println();
+    }
+    
+    public static void printHeading(String title){
+        printSeparator(50);
+        
+        //insert print chuchu title here
+        
+        //System.out.println("LVL " + inv.getLvl() + ": EXP " + inv.getXp() + "/" + inv.getReqXp() +"\t\t\tGold: " + inv.getGold());
+        printSeparator(50);
+    }
+    
     public static void battle(Monster monster, Character[] party){
         
         monster.show();
@@ -94,7 +118,7 @@ public class GameLogic {
             } while(choice == -1);
 
             // Player chooses an action
-            System.out.println("\n" + activePlayer.displayName() + "'s turn.");
+            System.out.println("\n" + RESET + activePlayer.displayName() + "'s turn." + RESET + RED + " (HP: " + activePlayer.getHP() + "/"+ RED +activePlayer.getMaxHP()+ BLUE +" | MP: "+activePlayer.getMP()+"/"+ BLUE +activePlayer.getMaxMP()+")");
             System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+ " | "+activePlayer.getDMG1()+")");
             System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+ " | "+activePlayer.getDMG2()+")");
             System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+ " | "+activePlayer.getDMG3()+")");
@@ -235,11 +259,13 @@ public class GameLogic {
                 damage = monster.skillOne();
                 System.out.println();
                 target.setHP(target.getHP() - damage);
+                if(!target.isAlive())
+                    System.out.println(RED_BACKGROUND + target.displayName() +" fainted!\n");
             }
 
             // Check if all players are dead
             if (!anyPlayerAlive(party)) {
-                System.out.println("All your characters have been defeated...");
+                    System.out.println(RED + "All your characters have been defeated...");
                 break;
             }
         }
