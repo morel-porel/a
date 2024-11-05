@@ -15,6 +15,32 @@ public class GameLogic {
     static Random ran = new Random();
     
     //Color codes, newly added.
+    public static boolean isRunning;
+    // for the dialogue and the skip function bruh rawr
+    public static void displayDialogue(String[] dialogueLines) {
+        Scanner scan = new Scanner(System.in);
+        boolean skipped = false; 
+
+        System.out.println("Dialogue starting... (Press ENTER to skip)");
+
+        for (String line : dialogueLines) {
+            System.out.println(line);
+
+            
+            if (scan.hasNextLine()) {
+                String input = scan.nextLine();
+                if (input.isEmpty()) {
+                    skipped = true;  
+                    break;  
+                }
+            }
+        }
+
+       
+        if (skipped) {
+            System.out.println("DIALOGUE SKIPPED.");
+        }
+    }
     
     public static final String RESET = "\u001B[0m";  // Reset to default
     public static final String RED = "\u001B[31m";
