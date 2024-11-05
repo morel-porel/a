@@ -14,26 +14,20 @@ public class JavaGame {
      * @param args the command line arguments
      */
 
-    String[] dialogue = {
-            "Level 1: The World Tree\n" +
-                    "The heart of the world, vibrant and full of life. Fairy Queen Tia rules from here, surrounded by a beautiful forest " +
-                    "\nwhere fairies sing, dance, and live in harmony. However, this tranquility is threatened as the Shadowmaw's dark influence " +
-                    "\nbegins to seep through the roots of the World Tree.",
-                    "Khaimon: Elara, the path you're about to take is dangerous. The darkness in the forest isn’t something even magic can easily quell.",
-                    "Elara: Master Khaimon… you've always taught us to protect our world. I must go--I feel this is my calling.",
-                    "Khaimon: (pauses, seeming torn) Yes… But remember, light can be corrupted, even the brightest. " +
-                    "\nSometimes the heart must make choices beyond what we understand.",
-                    "[As Elara ventures forward, she encounters a faint glow. A figure appears—Jascha, who radiates with a faint light.]",
-                    "Elara: (gasps) It's you… The hero reborn! Just like the prophecy said.",
-                    "Jascha: (confused) Hero? I’m just… me. I don’t know anything about prophecies.",
-                    "Elara: Then let me explain later. For now, we need to face this together!",
-                    "[A single slime, corrupted and oozing with darkness, appears and slithers toward them.]",
-                    "Jascha: Alright, I'm with you. That thing looks like it could use some purification.",
-                    "Elara: Stick close. This may be small, but it’s stronger than it looks."
+    String[] intro = {
+            "Long ago, beneath the branches of the ancient World Tree, a great prophecy was whispered: "
+          + "\na hero, reborn every 5000 years, would rise to save the world from darkness. Now, that time has come.",
+            "In a world teetering on the edge of ruin, the once-vibrant World Tree fades as the Shadowmaw—a monstrous"
+          + "\nspirit once its guardian—spreads corruption through the land. The skies darken, the fairies weaken, and hope grows thin.",
+            "A young fairy named Elara, brave and hopeful, discovers the prophecy and sets out to find the reincarnated hero. "
+          + "\nAlong her journey, she encounters Jascha, a warrior with a mysterious light, and together they venture through realms of wonder and peril.",
+            "In the whimsical land of Wonderland, they meet Finn, a clever imp with a mischievous grin, and their party is complete.",
+            "Together, Elara, Jascha, and Finn must face these shadows and decide the fate of their world. "
+          + "\nWill they restore the World Tree’s light or succumb to the darkness?",
+            "The journey begins now..."
         };
-
-        // Call the dialogue method
-        GameLogic.displayDialogue(dialogue);
+      
+        GameLogic.displayDialogue(intro);
     public static void main(String[] args) {
         // Define characters
         /*
