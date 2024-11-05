@@ -9,6 +9,17 @@ package game;
  */
 import java.util.Random;
 public class CharacterJascha extends Character{
+    public static final String RESET = "\u001B[0m";  // Reset to default
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String MAGENTA = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String ORANGE = "\033[38;5;214m";
+    public static final String RED_BACKGROUND = "\033[41m";
+    public static final String YELLOW_BACKGROUND = "\033[43m";
+    public static final String GREEN_BACKGROUND = "\033[42m";
     private int HP;
     private int maxHP;
     private int MP;
@@ -34,7 +45,7 @@ public class CharacterJascha extends Character{
     }
     @Override
     public String displayName(){
-        return "Jascha";
+        return YELLOW + "Jascha";
     }
     @Override
     public void setHP(int HP){
