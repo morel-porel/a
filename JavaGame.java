@@ -135,10 +135,6 @@ public class JavaGame {
          "Jascha: The darkness is finally gone.",
          "Finn: Guess we are heroes after all."
         };
-        
-
-    }
-
         //uncomment to try final battle vvv
         //FinalBattle.finalBattle(party); 
     }
