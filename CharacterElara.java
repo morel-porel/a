@@ -10,6 +10,16 @@ import java.util.Scanner;
  */
 import java.util.Random;
 public class CharacterElara extends Character{
+    public static final String RESET = "\u001B[0m";  // Reset to default
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
+    public static final String BLUE = "\u001B[34m";
+    public static final String MAGENTA = "\u001B[35m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String RED_BACKGROUND = "\033[41m";
+    public static final String YELLOW_BACKGROUND = "\033[43m";
+    public static final String GREEN_BACKGROUND = "\033[42m";
     private int HP;
     private int maxHP;
     private int MP;
@@ -20,7 +30,7 @@ public class CharacterElara extends Character{
     private int buffPercentage = 0;
     private int buffDamage = 0;
     private int buffTurnsRemaining;
-    
+
     //range
     private String range1;
     private String range2;
@@ -35,7 +45,7 @@ public class CharacterElara extends Character{
     }
     @Override
     public String displayName(){
-        return "Elara";
+        return MAGENTA +"Elara";
     }
     @Override
     public void setHP(int HP){
@@ -80,7 +90,7 @@ public class CharacterElara extends Character{
             int healAmount = ran.nextInt(30-5+1) + 5; 
             setHP(getHP() + healAmount); 
             
-            System.out.println("Elara healed herself for "+healAmount+" HP!");
+            System.out.println(RESET+ "Elara healed herself for "+ RED_BACKGROUND +healAmount+" HP!" +RESET);
             return healAmount;
         } else {
             System.out.println("Not enough MP.");
@@ -96,7 +106,7 @@ public class CharacterElara extends Character{
             System.out.println("\nElara used Heal!");
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
-                    System.out.println((i + 1) + ". " + party[i].displayName() + " (HP: " + party[i].getHP() + ")");
+                    System.out.println((i + 1) + ". " + party[i].displayName() + RESET +" (HP: " + party[i].getHP() + ")" + RESET);
                 }
             }
             int targetIndex;
@@ -118,20 +128,21 @@ public class CharacterElara extends Character{
             
             int healAmount = ran.nextInt(30-5+1) + 5; 
             target.setHP(target.getHP() + healAmount);             
-            System.out.println("Elara healed "+target.displayName() +" for "+healAmount+" HP!");
+            System.out.println(RESET +"Elara healed "+target.displayName() +RESET+" for "+ GREEN +healAmount+" HP!");
             return healAmount;
         } else {
             System.out.println("Not enough MP.");
             return 0;
         }
     }
+    
     //final battle ==================
     public int skillTwo(String name){
         Random ran = new Random();
         if(MP>=20){
             MP-=20;
             int healAmount = ran.nextInt(30-5+1) + 5;         
-            System.out.println("Elara healed "+name +" for "+healAmount+" HP!");
+            System.out.println("Elara healed "+name +" for " +healAmount+" HP!");
             return healAmount;
         } else {
             System.out.println("Not enough MP.");
@@ -146,14 +157,13 @@ public class CharacterElara extends Character{
         if(MP>=50){
             int buffPercentage = ran.nextInt(50-10+1) + 10;
             MP-=50;
-            System.out.println("Elara used Buff! Party attacks now deal "+buffPercentage +"% more damage in the next turn!");
+            System.out.println("Elara used Buff! Party attacks now deal "+ YELLOW +buffPercentage +"%" + RESET +" more damage in the next turn!");
             return buffPercentage;
         } else {
             System.out.println("Not enough MP.");
             return 0;
         }
     }
-    
     //for final battle ============
     public int skillThree(String name){
         Random ran = new Random();
@@ -166,8 +176,7 @@ public class CharacterElara extends Character{
             System.out.println("Not enough MP.");
             return 0;
         }
-    }
-    
+    }    
     @Override
     public int applyBuff(int baseDamage){
         if(buffActive){
@@ -234,7 +243,7 @@ public class CharacterElara extends Character{
         MP=maxMP;
               
     }
-    
+
     // range1
     @Override
     public void setDMG1(String range1){
@@ -251,7 +260,7 @@ public class CharacterElara extends Character{
     }
     @Override 
     public String getDMG2(){
-        return "HEAL: 5HP - 30HP";
+        return GREEN + "HEAL: 5HP - 30HP";
     }
     // range 3
     @Override
@@ -260,6 +269,6 @@ public class CharacterElara extends Character{
     }
     @Override 
     public String getDMG3(){
-        return "BUFF: 10DMG - 50DMG";
+        return YELLOW + "BUFF: 10DMG - 50DMG";
     }
 }
