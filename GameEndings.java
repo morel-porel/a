@@ -30,6 +30,14 @@ public class GameEndings {
         this.spareKhaimon = spareKhaimon;
     }
 
+    public boolean getHasArtifact(){
+        return hasArtifact;
+    }
+    
+    public boolean getUsedArtifact(){
+        return usedArtifact;
+    }
+    
     // Method to determine the ending
     public String determineEnding() {
         if (hasArtifact) {
