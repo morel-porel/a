@@ -10,80 +10,15 @@ package game;
  */
 
 public class FinalBattle extends GameLogic{
+//    public static GameEndings gameEndings = new GameEndings();
     
-    public static void printWithDelay(String text, int delay) {
-    for (char ch : text.toCharArray()) {
-        System.out.print(ch);
-        try {
-            Thread.sleep(delay); // delay in milliseconds
-        } catch (InterruptedException e) {
-            // Handle exception (could log it or print a message)
-            System.out.println("Interrupted exception occurred.");
-        }
-    }
-    System.out.println(); // Go to the next line after finishing
-    }
-    
-    public static void finalBattleIntro(){
-        String intro = """
-                       The room darkens, shadows lengthening as a figure emerges, his silhouette obscured by flickering
-                       torchlight. A familiar face comes into view, but his eyes are cold, glinting with an unnatural light. His
-                       voice, once warm, now echoes with a sinister edge.
-
-                       He takes a step forward, his form distorted, as if something dark and ancient pulses beneath his skin.
-                       
-                       He raises his weapon, his eyes burning with malice.
-                       """;
-        System.out.println(intro);
-        anythingToContinue();
-        
-    }
-    
-    public static void finalBattleVictory(){
-        String victory = """
-                       As Corrupted Khaimon falls to his knees, his dark aura begins to fade.
-                       
-                       "How... could this happen?" he murmurs, disbelief in his fading eyes.
-                       
-                       A silence settles over the battlefield, broken only by his final words:
-                       
-                       "Perhaps... you were always the stronger one..."
-                       
-                       With a final shudder, Khaimon collapses, the corruption seeping away.
-                       
-                       The shadows lift, and a new dawn breaks. You have triumphed.
-                       """;
-        System.out.println(victory);
-        anythingToContinue();
-    }
-    
-    public static void finalBattleFate(){
-        String fate = """
-                       The silence after the battle feels heavy, almost tangible, as if the very world is pausing to take in your journey.
-                       
-                       "Your choices have left their mark."
-                       
-                       Whispers seem to rise from the shadows around you, faint echoes of past actions, victories, and sacrifices.
-                       
-                       "Will your path lead to redemption... or ruin?"
-                       
-                       The air shifts, a sense of finality settling in. The outcome awaits--one forged by your own hand.
-                       
-                       The world holds its breath as you take your next step toward the end you've created.
-                       """;
-        System.out.println(fate);
-        anythingToContinue();
-    }
-    
-    
-    
-    public static void finalBattle(Character[] party){
+    public static int finalBattle(Character[] party, GameEndings gameEndings){
         CharacterKhaimon khaimon = new CharacterKhaimon();
         boolean enemyStunned = false;
         boolean partyStunned = false;
-        
-        finalBattleIntro();
-        
+        boolean isDefeated = false;
+        displayDialogue(StoryDialogue.finalBattleDialogue);
+        displayDialogue(StoryDialogue.finalBattleIntro);
         while(anyPlayerAlive(party) && khaimon.isAlive()){
             if (partyStunned) {
                 System.out.println("Party is stunned, your turn is skipped.\n");
@@ -110,7 +45,7 @@ public class FinalBattle extends GameLogic{
                 } while(choice == -1);
 
                 // Player chooses an action
-                System.out.println("\n" + activePlayer.displayName() + "'s turn.");
+                System.out.println("\n" + RESET + activePlayer.displayName() + "'s turn." + RESET + RED + " (HP: " + activePlayer.getHP() + "/"+ RED +activePlayer.getMaxHP()+ BLUE +" | MP: "+activePlayer.getMP()+"/"+ BLUE +activePlayer.getMaxMP()+")");
                 System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+ " | "+activePlayer.getDMG1()+")");
                 System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+ " | "+activePlayer.getDMG2()+")");
                 System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+ " | "+activePlayer.getDMG3()+")");
@@ -206,7 +141,8 @@ public class FinalBattle extends GameLogic{
             }
             // Check if the slime is dead end sequence
             if (!khaimon.isAlive()) {
-                finalBattleVictory();
+                System.out.println(RED_BACKGROUND +"Corrupted Khaimon has been defeated!\n"+ RESET);
+                displayDialogue(StoryDialogue.finalBattleVictory);
                 //recover downed members
                 for(Character partyMember : party){
                     if(!partyMember.isAlive()){
@@ -226,7 +162,12 @@ public class FinalBattle extends GameLogic{
                 System.out.println(GREEN +"+"+addMP+" mana potions");
                 System.out.println();
                 
-                finalBattleFate(); //placeholder for ending
+                boolean response = yesOrNo("Spare Khaimon?");
+                if(response){
+                    gameEndings.setSpareKhaimon(true);
+                }
+
+                isDefeated=true;
                 continue;
             }
 
@@ -283,9 +224,22 @@ public class FinalBattle extends GameLogic{
             }
             // Check if all players are dead
             if (!anyPlayerAlive(party)) {
-                System.out.println("All your characters have been defeated...");
+                GameLogic.partyDied();
+                boolean response = yesOrNo("Sacrifice Jascha to save World Tree?");
+                if(response){
+                    gameEndings.setSacrifice(true);
+                }                
                 break;
             }
+            
+            if(gameEndings.getHasArtifact()){
+                System.out.println("Corrupted Khaimon is at half health!");
+                boolean response = yesOrNo("Use artifact to seal Khaimon?");
+                if(response){
+                    gameEndings.setUsedArtifact(true);
+                }                
+            }
         }
+        return (isDefeated) ? 1 : 0;
     }
 }
