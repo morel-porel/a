@@ -137,7 +137,12 @@ public class FinalBattle extends GameLogic{
                     }
                 }
 
-                System.out.println("\n" + RED + khaimon.displayName() + RED + " HP: " + khaimon.getHP());  
+                if(khaimon.getHP()<=0){
+                    System.out.println("\n" + RED + khaimon.displayName() + RED + " HP: 0");                    
+                } else {
+                    System.out.println("\n" + RED + khaimon.displayName() + RED + " HP: " + khaimon.getHP());
+                }
+                
             }
 
             //use artifact if present, to seal khaimon
