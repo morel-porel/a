@@ -13,34 +13,31 @@ public class GameLogic {
     static Scanner scan = new Scanner(System.in);
     static Inventory inv = new Inventory();
     static Random ran = new Random();
+    static GameEndings gameEndings = new GameEndings();
     
+    static CharacterJascha Jascha = new CharacterJascha(150, 1000);
+    static CharacterElara Elara = new CharacterElara(150, 1000);
+    static CharacterFinn Finn = new CharacterFinn(250, 1000);
+    static Character[] party = {Elara, Jascha};
+    
+    //random encounters
+   
+    public static String[] encounters = {"Battle","Battle","Battle","Battle","Shop"};
+    public static Monster[] enemies = {
+        new MonsterSlime(25),
+        new MonsterSlime(25),
+        new MonsterSlime(25),
+        new MonsterSlime(25),
+        new MonsterSlime(25)
+    };
+    
+    //game variables
+    public static boolean isRunning; //===============
+    public static boolean miniBossDefeated = false;
+    public static boolean decoyDefeated = false;
+    public static int place = 0, act = 1;
+    public static String[] places = {"World Tree", "Wonderland", "Dark Forest"};
     //Color codes, newly added.
-    public static boolean isRunning;
-    // for the dialogue and the skip function bruh rawr
-    public static void displayDialogue(String[] dialogueLines) {
-        Scanner scan = new Scanner(System.in);
-        boolean skipped = false; 
-
-        System.out.println("Dialogue starting... (Press ENTER to skip)");
-
-        for (String line : dialogueLines) {
-            System.out.println(line);
-
-            
-            if (scan.hasNextLine()) {
-                String input = scan.nextLine();
-                if (input.isEmpty()) {
-                    skipped = true;  
-                    break;  
-                }
-            }
-        }
-
-       
-        if (skipped) {
-            System.out.println("DIALOGUE SKIPPED.");
-        }
-    }
     
     public static final String RESET = "\u001B[0m";  // Reset to default
     public static final String RED = "\u001B[31m";
@@ -49,7 +46,15 @@ public class GameLogic {
     public static final String BLUE = "\u001B[34m";
     public static final String MAGENTA = "\u001B[35m";
     public static final String CYAN = "\u001B[36m";
+    
     public static final String RED_BACKGROUND = "\033[41m";
+    public static final String BLUE_BACKGROUND = "\033[44m";
+    
+    private static <X> X[] addCharacter(X[] party, X member) {
+        X[] newParty = Arrays.copyOf(party, party.length + 1);
+        newParty[party.length] = member;
+        return newParty;
+    }
     
     public static int readInt(String prompt, int userChoices){
         int input=0;
@@ -71,7 +76,12 @@ public class GameLogic {
         }while(input < 1 || input > userChoices);
         return input;
     }
-
+    
+    public static void anythingToContinue(){
+        System.out.print("\nEnter anything to continue...");
+        scan.next();
+    }
+    
     public static boolean yesOrNo(String prompt){        
         scan.nextLine();
         while(true){
@@ -90,11 +100,28 @@ public class GameLogic {
             }
         }
     }
-    public static void anythingToContinue(){
-        System.out.println("\nEnter anything to continue...");
-        scan.next();
+    
+    public static void displayDialogue(String[] dialogueLines) {
+        Scanner scan = new Scanner(System.in);
+        boolean skipped = false; 
+        System.out.println("Dialogue starting... (Press ENTER to skip)");
+        for (String line : dialogueLines) {
+            System.out.println(line);
+            
+            if (scan.hasNextLine()) {
+                String input = scan.nextLine();
+                if (input.isEmpty()) {
+                    skipped = true;  
+                    break;  
+                }
+            }
+        }
+       
+        if (skipped) {
+            System.out.println("DIALOGUE SKIPPED.");
+        }
     }
-
+    
     public static void clearConsole(){
         for(int i=0;i<100;i++){
             System.out.println();
@@ -102,7 +129,7 @@ public class GameLogic {
     }
     
     public static void printSeparator(int n){
-        for(int i = 0 ; i < n ; i++){ //n is number of dashes
+        for(int i = 0 ; i < n ; i++){
             System.out.print("-");
         }
         System.out.println();
@@ -110,13 +137,172 @@ public class GameLogic {
     
     public static void printHeading(String title){
         printSeparator(50);
-        
+        System.out.println(title);
         //insert print chuchu title here
         
         //System.out.println("LVL " + inv.getLvl() + ": EXP " + inv.getXp() + "/" + inv.getReqXp() +"\t\t\tGold: " + inv.getGold());
         printSeparator(50);
     }
+        
+    public static void startGame(){
+        clearConsole();
+        //StoryLine.printBackgroundStory();
+        displayDialogue(StoryDialogue.intro);
+        clearConsole();
+        printSeparator(80);
+        printSeparator(30);
+        System.out.println(" _____     _                              __   _     _       _     _   ");
+        System.out.println("|  ___|   | |                            / _| | |   (_)     | |   | |  ");
+        System.out.println("| |__  ___| |__   ___   ___  ___    ___ | |_  | |    _  __ _| |__ | |_ ");
+        System.out.println("|  __|/ __| '_ \\ / _ \\ / _ \\/ __|  / _ \\|  _| | |   | |/ _` | '_ \\| __|");
+        System.out.println("| |__| (__| | | | (_) |  __/\\__ \\ | (_) | |   | |___| | (_| | | | | |_ ");
+        System.out.println("\\____/\\___|_| |_|\\___/ \\___||___/  \\___/|_|   \\_____/_|\\__, |_| |_|\\__|");
+        System.out.println("                                                        __/ |          ");
+        System.out.println("                                                       |___/           ");
+        System.out.println("TEXT RPG BY GROUP KATEYKI");
+        printSeparator(30);
+        printSeparator(80);
+        
+        
+        displayDialogue(StoryDialogue.act1Intro);
+        battle(new MonsterSlime(25), party);
+        //set to true for game loop
+        isRunning = true;
+        //start main game
+        gameLoop();
+    }
     
+    //method that changes the games values based 
+    public static void checkAct(){
+        //change act
+        if(inv.getLvl() >= 10 && act ==1){
+            act = 2;
+            place = 1;
+            displayDialogue(StoryDialogue.act1Outro);
+            displayDialogue(StoryDialogue.act2Intro);
+            party=addCharacter(party, Finn);
+            enemies[0] = new MonsterGoblin(50);
+            enemies[1] = new MonsterSlime(25);
+            enemies[2] = new MonsterGoblin(50);
+            enemies[3] = new MonsterSlime(25);
+            enemies[4] = new MonsterGoblin(50);
+            
+            
+            for(Character partyMember : party){
+                partyMember.setHP(partyMember.getMaxHP());
+            }
+        } else if (inv.getLvl() >= 14 && act ==2){
+            act = 3;
+            place = 2;
+            displayDialogue(StoryDialogue.act2Outro);
+            displayDialogue(StoryDialogue.act3Intro);
+            enemies[0] = new MonsterGoblin(50);
+            enemies[1] = new MonsterGoblin(25);
+            enemies[2] = new MonsterGoblin(50);
+            enemies[3] = new MonsterOgre(75);
+            enemies[4] = new MonsterGoblin(50);
+        
+            if(!decoyDefeated){
+                battle(new MonsterShadowMaw(100), party);
+                displayDialogue(StoryDialogue.act3AfterShadowmaw);
+                encounterArtifact();
+                decoyDefeated = true;
+                
+            }
+        }
+    }
+    
+    public static void encounterArtifact(){
+        System.out.println("You discovered an artifact!");
+        boolean response = yesOrNo("Take Artifact?");
+        if(response){
+            gameEndings.setHasArtifact(true);
+        }
+        
+    }
+    
+    public static void randomEncounter(){
+        int encounter = ran.nextInt(encounters.length);
+        if (encounters[encounter].equals("Battle")) {
+            Monster randomEnemy;
+            do {
+                randomEnemy = enemies[ran.nextInt(enemies.length)];
+            } while (!randomEnemy.isAlive());
+            battle(randomEnemy, party);
+        } else {
+            shopMenu(inv);
+        }
+            
+    }
+    
+    public static void partyDied(){
+        clearConsole();
+        printHeading(RED + "All your characters have been defeated...");
+    }
+    
+    //method to continue journey
+    public static void continueJourney(){
+        checkAct();
+        if(act==2 && inv.getLvl()>=12 && !miniBossDefeated){            
+            displayDialogue(StoryDialogue.act2MiniBoss);
+            battle(new MonsterOgre(75), party);
+            miniBossDefeated = true;
+        }
+            
+        if(decoyDefeated && inv.getLvl()>=15){
+            int khaimonDefeated = FinalBattle.finalBattle(party,gameEndings);
+            gameEndings.setDefeatedKhaimon(khaimonDefeated == 1);            
+            System.out.println(gameEndings.determineEnding());
+            isRunning = false;
+        }
+        
+        if(act != 3) //check if game isnt last act
+            randomEncounter();
+    }
+    
+    public static void characterInfo(Character[] party){
+        clearConsole();
+        printHeading("CHARACTER INFO");
+        System.out.println("LVL " + inv.getLvl() + ": EXP " + inv.getXp() + "/" + inv.getReqXp() +"\t\t\tGold: " + inv.getGold());
+        for (int i = 0; i < party.length; i++) {
+            System.out.println(RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")");
+        }        
+        
+        boolean response = yesOrNo("Would you like to know more about the characters?");
+        if(response){
+            StoryLine.printCharacterBackstory();
+            anythingToContinue();
+        }
+    }
+    
+    public static void printMenu(){
+        clearConsole();
+        printHeading(places[place]);
+        System.out.println("Choose an action: ");
+        printSeparator(20);
+        System.out.println("1. Continue on your journey");
+        System.out.println("2. Character Info");
+        System.out.println("3. Exit Game");
+        
+    }
+    
+    //main game loop
+    public static void gameLoop(){
+        while(isRunning){
+            printMenu();
+            int input = readInt("-> ", 3);
+            if(input == 1) {
+                System.out.println();
+            
+                continueJourney();
+            } else if (input == 2) {
+                characterInfo(party);
+            } else {
+                isRunning = false;
+            }
+        }
+    }
+    //===========
     public static void battle(Monster monster, Character[] party){
         
         monster.show();
@@ -124,6 +310,7 @@ public class GameLogic {
         boolean enemyStunned = false;
         
         while (anyPlayerAlive(party) && monster.isAlive()) {
+            printHeading("Your turn!");
             // Player selects a character
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
@@ -134,7 +321,7 @@ public class GameLogic {
             int choice;
             Character activePlayer;
             do{
-                choice = readInt("\nChoose a character: ", 3)-1;
+                choice = readInt("\nChoose a character: ", party.length)-1;
                 activePlayer = party[choice];
                 if(!activePlayer.isAlive()){
                     scan.nextLine();
@@ -199,29 +386,26 @@ public class GameLogic {
                 
                 case 4:
                     boolean inInventory = true;
-
-                while (inInventory) {
-                    inv.displayInventory();
-                    System.out.println("1. Use health potion");
-                    System.out.println("2. Use mana potion");
-                    System.out.println("3. RETURN"); // Option to exit inventory
-
-                    action = readInt("\nChoose an action: ", 3); // Update to allow choice 1-3
-
-                    switch (action) {
-                        case 1:
-                            inv.useHealthPotion(activePlayer);
-                            break;
-                        case 2:
-                            inv.useManaPotion(activePlayer);
-                            break;
-                        case 3:
-                            inInventory = false; // Exit inventory and return to battle menu
-                            break;
-                        default:
-                            System.out.println("Invalid Choice!");
+                    while (inInventory) {
+                        inv.displayInventory();
+                        System.out.println("1. Use health potion");
+                        System.out.println("2. Use mana potion");
+                        System.out.println("3. RETURN"); // Option to exit inventory
+                        action = readInt("\nChoose an action: ", 3); // Update to allow choice 1-3
+                        switch (action) {
+                            case 1:
+                                inv.useHealthPotion(activePlayer);
+                                break;
+                            case 2:
+                                inv.useManaPotion(activePlayer);
+                                break;
+                            case 3:
+                                inInventory = false; // Exit inventory and return to battle menu
+                                break;
+                            default:
+                                System.out.println("Invalid Choice!");
+                        }
                     }
-                }
                 break;
             }
             //buff deactivation
@@ -237,7 +421,7 @@ public class GameLogic {
             }
             
             System.out.println("\n" + RED + monster.displayName() + RED + " HP: " + monster.getHP());   
-            // Check if the slime is dead
+            // Check if the slime is dead end sequence
             if (!monster.isAlive()) {
                 System.out.println("You defeated the " + monster.displayName() + "!");
                 //recover downed members
@@ -246,7 +430,7 @@ public class GameLogic {
                         partyMember.revive();
                     }
                 }
-                int addHP = ran.nextInt(10-5+1) + 5, addMP = ran.nextInt(10-5+1) + 5, addXP = ran.nextInt(15-5+1) + 5;
+                int addHP = ran.nextInt(10-5+1) + 5, addMP = ran.nextInt(10-5+1) + 5, addXP = 1000;
                 inv.addXp(addXP, party);
                 inv.addHealthPotion(addHP);
                 inv.addManaPotion(addMP);
@@ -258,8 +442,6 @@ public class GameLogic {
                 System.out.println(GREEN +"+"+addHP+" health potions");
                 System.out.println(GREEN +"+"+addMP+" mana potions");
                 System.out.println();
-
-                // NEW BLOCK LINE 180 to 189 << PROMPT FOR SHOP AFTER PATAY OG MONSTER
                 if(inv.getGold() >= 10){
                     boolean response = yesOrNo("Would you like to visit the shop?");
                     if(response){
@@ -270,7 +452,7 @@ public class GameLogic {
                 continue;
             }
             
-
+            //printHeading(monster.displayName() + "'s turn!");
             // If the enemy is stunned, skip their turn
             if (enemyStunned) {
                 System.out.println(RED + monster.displayName() + " is stunned and skips their turn.\n");
@@ -282,19 +464,31 @@ public class GameLogic {
                     target = party[(int) (Math.random() * party.length)];  // Select a random party member
                 } while (!target.isAlive());  // Repeat if the selected character is not alive
                 System.out.println("\n" + monster.displayName() + "'s turn and targeted "+target.displayName()+"!");
-                damage = monster.skillOne();
-                System.out.println();
-                target.setHP(target.getHP() - damage);
-                if(!target.isAlive())
-                    System.out.println(RED_BACKGROUND + target.displayName() +" fainted!\n");
+                damage = 0;
+                boolean partyStunned = false;
+                if(monster instanceof MonsterShadowMaw){
+                    int move = new Random().nextInt(2) + 1;
+                    
+                    switch(move){
+                        case 1:
+                            damage = monster.skillOne();
+                            partyStunned = true;
+                            System.out.println("The party is stunned and skip their next turn.");
+                        
+                        case 2:
+                            damage = monster.skillTwo();
+                            break;
+                    }
+                }
             }
-
+            
+            
             // Check if all players are dead
             if (!anyPlayerAlive(party)) {
-                    System.out.println(RED + "All your characters have been defeated...");
+                partyDied();                
                 break;
             }
-        }
+        }    
     }
 
     // Utility method to check if any player in the party is still alive
@@ -306,58 +500,50 @@ public class GameLogic {
         }
         return false;
     }
-
-
-    // KANI BAG.o NI FOR SHOPMENU
+    
     public static void shopMenu(Inventory playerInventory) {
     boolean shopping = true;
     System.out.println();
     System.out.println("( ; 7,_>7) Hoho, you found me! Welcome to the Secret Shop!");
+        while (shopping) {
+            System.out.println("\nWhat would you like to do?");
+            System.out.println("1. Buy Health Potion (10 gold each)");
+            System.out.println("2. Buy Mana Potion (10 gold each)");
+            System.out.println("3. Exit Shop");
+            int choice = readInt("\nEnter your choice (1-3): ", 3);
+            switch (choice) {
+                case 1:
+                    System.out.print("How many Health Potions would you like to buy? ");
+                    int healthPotionQuantity = readInt("\nQuantity: ", 100);
+                    int healthPotionCost = healthPotionQuantity * 10;
+                    if (playerInventory.getGold() >= healthPotionCost) {
+                        playerInventory.addHealthPotion(healthPotionQuantity);
+                        playerInventory.spendGold(healthPotionCost);
+                        System.out.println("You bought " + healthPotionQuantity + " Health Potions!");
+                    } else {
+                        System.out.println("Not enough gold!");
+                    }
+                    break;
+                case 2:
+                    System.out.print("How many Mana Potions would you like to buy? ");
+                    int manaPotionQuantity = readInt("\nQuantity: ", 100);
+                    int manaPotionCost = manaPotionQuantity * 10;
+                    if (playerInventory.getGold() >= manaPotionCost) {
+                        playerInventory.addManaPotion(manaPotionQuantity);
+                        playerInventory.spendGold(manaPotionCost);
+                        System.out.println("You bought " + manaPotionQuantity + " Mana Potions!");
+                    } else {
+                        System.out.println("Not enough gold!");
+                    }
+                    break;
+                case 3:
+                    shopping = false;
+                    System.out.println("Thanks for visiting the shop!");
+                    break;
+                default:
+                    System.out.println("Invalid choice! Please select again.");
 
-    while (shopping) {
-        System.out.println("\nWhat would you like to do?");
-        System.out.println("1. Buy Health Potion (10 gold each)");
-        System.out.println("2. Buy Mana Potion (10 gold each)");
-        System.out.println("3. Exit Shop");
-
-        int choice = readInt("\nEnter your choice (1-3): ", 3);
-
-        switch (choice) {
-            case 1:
-                System.out.print("How many Health Potions would you like to buy? ");
-                int healthPotionQuantity = readInt("\nQuantity: ", 100);
-                int healthPotionCost = healthPotionQuantity * 10;
-
-                if (playerInventory.getGold() >= healthPotionCost) {
-                    playerInventory.addHealthPotion(healthPotionQuantity);
-                    playerInventory.spendGold(healthPotionCost);
-                    System.out.println("You bought " + healthPotionQuantity + " Health Potions!");
-                } else {
-                    System.out.println("Not enough gold!");
-                }
-                break;
-            case 2:
-                System.out.print("How many Mana Potions would you like to buy? ");
-                int manaPotionQuantity = readInt("\nQuantity: ", 100);
-                int manaPotionCost = manaPotionQuantity * 10;
-
-                if (playerInventory.getGold() >= manaPotionCost) {
-                    playerInventory.addManaPotion(manaPotionQuantity);
-                    playerInventory.spendGold(manaPotionCost);
-                    System.out.println("You bought " + manaPotionQuantity + " Mana Potions!");
-                } else {
-                    System.out.println("Not enough gold!");
-                }
-                break;
-            case 3:
-                shopping = false;
-                System.out.println("Thanks for visiting the shop!");
-                break;
-            default:
-                System.out.println("Invalid choice! Please select again.");
-                
+            }
         }
     }
-}
-    
 }
