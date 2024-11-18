@@ -111,7 +111,7 @@
             System.out.println("Corrupted Khaimon used mind control!");
             Character target;
             if (isOnlyOneAlive(party)) { // Only one character left
-                System.out.println("Corrupted Khaimon twists the last hero’s mind against their own.");
+                System.out.println("Corrupted Khaimon twists the last hero's mind against their own.");
                 int mentalDamage = applyBuff(ran.nextInt(50-10+1) + 10);
                 if(isBuffActive()){
                     System.out.println(controlled.displayName() + " succumbs, dealing " + (mentalDamage-buffDamage) +" + "+buffDamage+" damage under Khaimon's control...");
