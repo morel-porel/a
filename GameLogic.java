@@ -420,7 +420,12 @@ public class GameLogic {
                 }
             }
             
-            System.out.println("\n" + RED + monster.displayName() + RED + " HP: " + monster.getHP());   
+            if(!monster.isAlive()){
+                System.out.println("\n" + RED + monster.displayName() + RED + " HP: 0");   
+            } else {
+                System.out.println("\n" + RED + monster.displayName() + RED + " HP: " + monster.getHP());   
+            }  
+            
             // Check if the slime is dead end sequence
             if (!monster.isAlive()) {
                 System.out.println("You defeated the " + monster.displayName() + "!");
