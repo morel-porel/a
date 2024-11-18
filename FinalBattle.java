@@ -139,6 +139,17 @@ public class FinalBattle extends GameLogic{
 
                 System.out.println("\n" + RED + khaimon.displayName() + RED + " HP: " + khaimon.getHP());  
             }
+
+            //use artifact if present, to seal khaimon
+            if(gameEndings.getHasArtifact()&&khaimon.getHP()<=(khaimon.getMaxHP()/2)){
+                System.out.println("Corrupted Khaimon is at half health!");
+                boolean response = yesOrNo("Use artifact to seal Khaimon?");
+                if(response){
+                    gameEndings.setUsedArtifact(true);
+                    khaimon.setHP(0);
+                }                
+            }
+            
             // Check if the slime is dead end sequence
             if (!khaimon.isAlive()) {
                 System.out.println(RED_BACKGROUND +"Corrupted Khaimon has been defeated!\n"+ RESET);
@@ -162,9 +173,11 @@ public class FinalBattle extends GameLogic{
                 System.out.println(GREEN +"+"+addMP+" mana potions");
                 System.out.println();
                 
-                boolean response = yesOrNo("Spare Khaimon?");
-                if(response){
-                    gameEndings.setSpareKhaimon(true);
+                if(!gameEndings.getUsedArtifact()){
+                    boolean response = yesOrNo("Spare Khaimon?");
+                    if(response){
+                        gameEndings.setSpareKhaimon(true);
+                    }
                 }
 
                 isDefeated=true;
@@ -230,14 +243,6 @@ public class FinalBattle extends GameLogic{
                     gameEndings.setSacrifice(true);
                 }                
                 break;
-            }
-            
-            if(gameEndings.getHasArtifact()){
-                System.out.println("Corrupted Khaimon is at half health!");
-                boolean response = yesOrNo("Use artifact to seal Khaimon?");
-                if(response){
-                    gameEndings.setUsedArtifact(true);
-                }                
             }
         }
         return (isDefeated) ? 1 : 0;
