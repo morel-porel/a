@@ -17,7 +17,7 @@ public class GameLogic {
     
     static CharacterJascha Jascha = new CharacterJascha(150, 1000);
     static CharacterElara Elara = new CharacterElara(150, 1000);
-    static CharacterFinn Finn = new CharacterFinn(250, 1000);
+    static CharacterFinn Finn = new CharacterFinn(350, 500);
     static Character[] party = {Elara, Jascha};
     
     //random encounters
