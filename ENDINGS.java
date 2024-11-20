@@ -33,9 +33,8 @@ public class ENDINGS {
                     boolean spareKhaimon = getYesOrNoInput(scanner, "Did you spare Khaimon? (yes/no): ");
                     gameEndings.setSpareKhaimon(spareKhaimon);
                 } else {
-                    // If Khaimon is not defeated, ask for a sacrifice
-                    boolean makeSacrifice = getYesOrNoInput(scanner, "Do you wish to sacrifice yourself to stop Khaimon? (yes/no): ");
-                    gameEndings.setSacrifice(makeSacrifice);
+                    // Directly handle bad ending if not defeated and no artifact
+                    gameEndings.setSacrifice(false);
                 }
 
                 System.out.println("\n" + gameEndings.determineEnding());
@@ -49,9 +48,8 @@ public class ENDINGS {
                 boolean spareKhaimon = getYesOrNoInput(scanner, "Did you spare Khaimon? (yes/no): ");
                 gameEndings.setSpareKhaimon(spareKhaimon);
             } else {
-                // If Khaimon is not defeated, ask for a sacrifice
-                boolean makeSacrifice = getYesOrNoInput(scanner, "Do you wish to sacrifice yourself to stop Khaimon? (yes/no): ");
-                gameEndings.setSacrifice(makeSacrifice);
+                // Directly handle bad ending if not defeated and no artifact
+                gameEndings.setSacrifice(false);
             }
 
             System.out.println("\n" + gameEndings.determineEnding());
