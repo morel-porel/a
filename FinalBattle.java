@@ -146,7 +146,7 @@ public class FinalBattle extends GameLogic{
             }
 
             //use artifact if present, to seal khaimon
-            if(gameEndings.getHasArtifact()&&khaimon.getHP()<=(khaimon.getMaxHP()/2)){
+            if(gameEndings.getHasArtifact()&&khaimon.getHP()<=(khaimon.getMaxHP()/2)&&khaimon.isAlive()){
                 System.out.println("Corrupted Khaimon is at half health!");
                 boolean response = yesOrNo("Use artifact to seal Khaimon?");
                 if(response){
