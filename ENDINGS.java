@@ -32,12 +32,11 @@ public class ENDINGS {
                     // Ask if the player spared Khaimon
                     boolean spareKhaimon = getYesOrNoInput(scanner, "Did you spare Khaimon? (yes/no): ");
                     gameEndings.setSpareKhaimon(spareKhaimon);
+                    System.out.println("\n" + gameEndings.determineEnding());
                 } else {
-                    // Directly handle bad ending if not defeated and no artifact
-                    gameEndings.setSacrifice(false);
+                    // Directly handle bad ending if not defeated and no artifact usage
+                    System.out.println("\n" + gameEndings.determineEnding());
                 }
-
-                System.out.println("\n" + gameEndings.determineEnding());
             }
         } else {
             // If no artifact was taken, follow the no-artifact paths
@@ -47,12 +46,13 @@ public class ENDINGS {
             if (defeatedKhaimon) {
                 boolean spareKhaimon = getYesOrNoInput(scanner, "Did you spare Khaimon? (yes/no): ");
                 gameEndings.setSpareKhaimon(spareKhaimon);
+                System.out.println("\n" + gameEndings.determineEnding());
             } else {
-                // Directly handle bad ending if not defeated and no artifact
-                gameEndings.setSacrifice(false);
+                // If Khaimon is not defeated, ask for a sacrifice
+                boolean makeSacrifice = getYesOrNoInput(scanner, "Do you wish to sacrifice yourself to stop Khaimon? (yes/no): ");
+                gameEndings.setSacrifice(makeSacrifice);
+                System.out.println("\n" + gameEndings.determineEnding());
             }
-
-            System.out.println("\n" + gameEndings.determineEnding());
         }
 
         scanner.close();
