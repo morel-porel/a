@@ -243,10 +243,12 @@ public class FinalBattle extends GameLogic{
             // Check if all players are dead
             if (!anyPlayerAlive(party)) {
                 GameLogic.partyDied();
-                boolean response = yesOrNo("Sacrifice Jascha to save World Tree?");
-                if(response){
-                    gameEndings.setSacrifice(true);
-                }                
+                if(!gameEndings.getHasArtifact()){
+                    boolean response = yesOrNo("Sacrifice Jascha to save World Tree?");
+                    if(response){
+                        gameEndings.setSacrifice(true);
+                    }
+                }
                 break;
             }
         }
