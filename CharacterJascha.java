@@ -74,20 +74,17 @@ public class CharacterJascha extends Character{
     }
     @Override
     public int skillOne(){
-        Random ran = new Random();
-        if(MP>=10){
-            int skillOneDamage = applyBuff(ran.nextInt(15-5+1) + 5);
-            MP-=10;
-            if(isBuffActive()){
-                System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+(skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
-            } else {
-                System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+skillOneDamage +" damage!");
-            }
-            return skillOneDamage;
+        Random ran = new Random();        
+        int skillOneDamage = applyBuff(ran.nextInt(15-5+1) + 5);
+        int manaRegen = ran.nextInt(20-10+1) + 10;
+        setMP(getMP()+manaRegen);
+        if(isBuffActive()){
+            System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+(skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
         } else {
-            System.out.println("Not enough MP.");
-            return 0;
+            System.out.println("Jascha used Flashstrike Thunderclap! Dealt "+skillOneDamage +" damage!");
         }
+        System.out.println("Jascha recovered "+manaRegen+" MP!");
+        return skillOneDamage;
     }
     @Override
     public int skillTwo(){
@@ -172,7 +169,7 @@ public class CharacterJascha extends Character{
     
     @Override
     public int skillOneMP() {
-        return 10;
+        return 0;
     }
 
     @Override
