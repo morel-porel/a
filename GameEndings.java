@@ -10,14 +10,6 @@ public class GameEndings {
     private boolean spareKhaimon = false;
 
     // Setter methods
-    public boolean getSpareKhaimon() {
-        return spareKhaimon;
-    }
-
-    public boolean getDefeatedKhaimon() {
-        return defeatedKhaimon;
-    }
-    
     public void setHasArtifact(boolean hasArtifact) {
         this.hasArtifact = hasArtifact;
     }
@@ -38,68 +30,71 @@ public class GameEndings {
         this.spareKhaimon = spareKhaimon;
     }
 
-    public boolean getHasArtifact(){
+    public boolean getHasArtifact() {
         return hasArtifact;
     }
-    
-    public boolean getUsedArtifact(){
+
+    public boolean getUsedArtifact() {
         return usedArtifact;
     }
-    
+
+    public boolean getDefeatedKhaimon() {
+        return defeatedKhaimon;
+    }
+
+    public boolean getSacrifice() {
+        return sacrifice;
+    }
+
+    public boolean getSpareKhaimon() {
+        return spareKhaimon;
+    }
+
     // Method to determine the ending
 public String determineEnding() {
-    // Check if the artifact was taken
-    if (hasArtifact) {
-        // Check if the artifact was used
-        if (usedArtifact) {
-            // If the artifact was used and Khaimon was defeated
-            if (defeatedKhaimon) {
+        if (hasArtifact) {
+            if (usedArtifact) {
+                // If the artifact is used, Jascha is automatically corrupted
                 return "\nBittersweet Ending - Jascha is Corrupted\n"
                         + "\nIn the climactic battle, the party defeats Khaimon, but Jascha is overtaken by corrupted energy.\n"
                         + "\nConsumed by darkness, Jascha is sealed in the artifact.\n"
                         + "\nThe party leaves with the World Tree restored, but Jascha's sacrifice is a bittersweet memory of their victory.\n";
             } else {
-                // If the artifact was used but Khaimon was not defeated
-                return "\nGoodbye Friend Ending - Khaimon is defeated but not spared.\n"
-                        + "\nDespite the party's efforts, Khaimon manages to escape the final confrontation.\n"
-                        + "\nThough Khaimon is weakened, he vows to return, leaving the world in a precarious state.\n"
-                        + "\nThe party mourns the loss of their chance to end the darkness once and for all.\n";
+                // If the artifact is not used, handle based on Khaimon's fate
+                if (!defeatedKhaimon) {
+                    return "\nBad Ending - The hero fails to defeat or stop Khaimon.\n"
+                            + "\nDespite their courage, the party is overwhelmed by Khaimon's dark magic and falls one by one.\n"
+                            + "\nWith no one left to stop him, Khaimon corrupts the World Tree, solidifying his rule.\n"
+                            + "\nThe land becomes a shadowy wasteland, with corrupted creatures prowling the woods\n"
+                            + "and the twisted World Tree spreading darkness.\n"
+                            + "\nThe hero and their party are remembered and mourned as the last hope that fell to darkness.\n";
+                } else {
+                    return evaluateEnding3();
+                }
             }
         } else {
-            // If the artifact was taken but not used and Khaimon was not defeated
             if (defeatedKhaimon) {
-                return "\nGoodbye Friend Ending - Khaimon is defeated but not spared.\n"
-                        + "\nDespite the party's efforts, Khaimon manages to escape the final confrontation.\n"
-                        + "\nThough Khaimon is weakened, he vows to return, leaving the world in a precarious state.\n"
-                        + "\nThe party mourns the loss of their chance to end the darkness once and for all.\n";
+                return evaluateEnding3();
             } else {
-                // If Khaimon is not defeated and the artifact is not used
-                return "\nBad Ending - The hero fails to defeat or stop Khaimon.\n"
-                        + "\nDespite their courage, the party is overwhelmed by Khaimon's dark magic and falls one by one.\n"
-                        + "\nWith no one left to stop him, Khaimon corrupts the World Tree, solidifying his rule.\n"
-                        + "\nThe land becomes a shadowy wasteland, with corrupted creatures prowling the woods\n"
-                        + "and the twisted World Tree spreading darkness.\n"
-                        + "\nThe hero and their party are remembered and mourned as the last hope that fell to darkness.\n";
+                if (sacrifice) {
+                    return "\nSacrifice Ending - Jascha sacrifices themselves to try to stop Khaimon.\n"
+                            + "\nAs the battle peaks, Khaimon's corruption overwhelms. The hero Jascha decides to make the ultimate sacrifice.\n"
+                            + "\nWhile the party fights shadows, Jascha channels their life force to banish the darkness.\n"
+                            + "\nWith a final strike, they seal Khaimon and the corruption within themselves.\n"
+                            + "\nThe darkness vanishes, leaving peace.\n"
+                            + "\nThe forest flourishes, the World Tree renews, and Khaimon's reign ends.\n"
+                            + "\nThe party returns, mourning their hero whose light now eternally brightens the forest.";
+                } else {
+                    return "\nBad Ending - The hero fails to defeat or stop Khaimon.\n"
+                            + "\nDespite their courage, the party is overwhelmed by Khaimon's dark magic and falls one by one.\n"
+                            + "\nWith no one left to stop him, Khaimon corrupts the World Tree, solidifying his rule.\n"
+                            + "\nThe land becomes a shadowy wasteland, with corrupted creatures prowling the woods\n"
+                            + "and the twisted World Tree spreading darkness.\n"
+                            + "\nThe hero and their party are remembered and mourned as the last hope that fell to darkness.\n";
+                }
             }
-        }
-    } else {
-        // If no artifact was taken
-        if (defeatedKhaimon) {
-            return "\nGoodbye Friend Ending - Khaimon is defeated but not spared.\n"
-                    + "\nDespite the party's efforts, Khaimon manages to escape the final confrontation.\n"
-                    + "\nThough Khaimon is weakened, he vows to return, leaving the world in a precarious state.\n"
-                    + "\nThe party mourns the loss of their chance to end the darkness once and for all.\n";
-        } else {
-            // If Khaimon is not defeated and no artifact was taken
-            return "\nBad Ending - The hero fails to defeat or stop Khaimon.\n"
-                    + "\nDespite their courage, the party is overwhelmed by Khaimon's dark magic and falls one by one.\n"
-                    + "\nWith no one left to stop him, Khaimon corrupts the World Tree, solidifying his rule.\n"
-                    + "\nThe land becomes a shadowy wasteland, with corrupted creatures prowling the woods\n"
-                    + "and the twisted World Tree spreading darkness.\n"
-                    + "\nThe hero and their party are remembered and mourned as the last hope that fell to darkness.\n";
         }
     }
-}
 
     private String evaluateEnding3() {
         // Handling Khaimon's fate based on whether he is spared or not
@@ -151,4 +146,3 @@ public String determineEnding() {
         System.out.println(ending3b1.determineEnding());
     }*/
     
-}
