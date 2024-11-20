@@ -75,11 +75,15 @@ public class CharacterElara extends Character{
     public int skillOne(){
         Random ran = new Random();
         int skillOneDamage = applyBuff(ran.nextInt(11));
+        int manaRegen = ran.nextInt(20-10+1) + 10;
+        setMP(getMP()+manaRegen);
+        
         if(isBuffActive()){
             System.out.println("Elara used Staff Attack! Dealt "+(skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
         } else {
             System.out.println("Elara used Staff Attack! Dealt "+skillOneDamage +" damage!");            
         }
+        System.out.println("Elara recovered "+manaRegen+" MP!");
         return skillOneDamage;
     }
     @Override    
