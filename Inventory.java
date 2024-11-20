@@ -99,6 +99,10 @@ public class Inventory {
         return xp;
     }
 
+    public int getReqXp(){
+        return xpReq;
+    }
+
     public void addXp(int amount, Character[] party) {
         xp += amount;
         if(xp>=xpReq){
