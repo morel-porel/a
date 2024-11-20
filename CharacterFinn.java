@@ -78,28 +78,25 @@ public class CharacterFinn extends Character{
    @Override
     public int skillOne() {
         Random ran = new Random();
-        if (MP >= 30) {
-            int skillOneDamage = applyBuff(ran.nextInt(11) + 5); // 5 to 15 damage range
-            MP -= 30;
-            if (ran.nextInt(100) < 50) { // % chance to stun
-                if(isBuffActive()){
-                    System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage and stunned the enemy!");
-                } else {
-                    System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
-                }
-                
-                return -(skillOneDamage + 2); // Use negative damage to indicate stun
-            }
+        int skillOneDamage = applyBuff(ran.nextInt(11) + 5); // 5 to 15 damage range
+        int manaRegen = ran.nextInt(20-10+1) + 10;
+        setMP(getMP()+manaRegen);
+        if (ran.nextInt(100)<50) { // % chance to stun
             if(isBuffActive()){
-                System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
+                System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage and stunned the enemy!");
             } else {
-                System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
-            }            
-            return skillOneDamage; // Normal damage
-        } else {
-            System.out.println("Not enough MP.");
-            return 0; // No damage, not enough MP
+                System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage and stunned the enemy!");
+            }
+            System.out.println("Finn recovered "+manaRegen+" MP!");
+            return -(skillOneDamage + 2); // Use negative damage to indicate stun
         }
+        if(isBuffActive()){
+            System.out.println("Finn used Traps! Dealt " + (skillOneDamage-buffDamage) +" + "+buffDamage+" damage!");
+        } else {
+            System.out.println("Finn used Traps! Dealt " + skillOneDamage + " damage!");
+        } 
+        System.out.println("Finn recovered "+manaRegen+" MP!");
+        return skillOneDamage; // Normal damage
     }
     //basta
     @Override
@@ -189,7 +186,7 @@ public class CharacterFinn extends Character{
     
     @Override
     public int skillOneMP() {
-        return 30;
+        return 0;
     }
 
     @Override
