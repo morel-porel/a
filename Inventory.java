@@ -109,6 +109,10 @@ public class Inventory {
             lvlUp(party);            
         }
     }
+
+    public int getLvl(){
+        return lvl;
+    }
     
     public void lvlUp(Character[] party){
         while(xp>=xpReq){
