@@ -57,7 +57,7 @@ public String determineEnding() {
                 // If the artifact is used, Jascha is automatically corrupted
                 return "\nBittersweet Ending - Jascha is Corrupted\n"
                         + "\nIn the climactic battle, the party defeats Khaimon, but Jascha is overtaken by corrupted energy.\n"
-                        + "\nConsumed by darkness, Jascha is sealed in the artifact.\n"
+                        + "\nConsumed by darkness, Jascha is sealed in the medallion.\n"
                         + "\nThe party leaves with the World Tree restored, but Jascha's sacrifice is a bittersweet memory of their victory.\n";
             } else {
                 // If the artifact is not used, handle based on Khaimon's fate
@@ -100,16 +100,16 @@ public String determineEnding() {
         // Handling Khaimon's fate based on whether he is spared or not
         if (spareKhaimon) {
             if (hasArtifact) {
-                return "\nLost Friend Ending - Khaimon is spared but not convinced due to artifact.\n"
+                return "\nLost Friend Ending - Khaimon is spared but not convinced due to medallion.\n"
                         + "\nAfter a fierce battle, the party weakens Khaimon but can't fully save him.\n"
-                        + "\nDespite their appeals, the corrupted artifact holds his mind.\n"
+                        + "\nDespite their appeals, the corrupted medallion holds his mind.\n"
                         + "\nThey spare him, but his eyes remain filled with distrust and malice.\n"
-                        + "\nKhaimon retreats into the shadows, clutching the artifact.\n"
+                        + "\nKhaimon retreats into the shadows, clutching the medallion.\n"
                         + "\nThe party leaves with a sense of loss, knowing Khaimon is still out there, burdened by darkness.\n"
                         + "\nThe World Tree is safe for now, but peace remains fragile, with the threat of Khaimon's return lingering.\n";
             } else {
                 return "\nGood Ending - Khaimon is defeated, spared, and convinced to stop.\n"
-                        + "\nThe party shatters the dark artifact, clearing Khaimon's mind.\n"
+                        + "\nThe party shatters the corrupted medallion, clearing Khaimon's mind.\n"
                         + "\nMemories of his true purpose return, and he vows to undo the damage.\n"
                         + "\nTogether, they purify the World Tree. Khaimon, now scarred, rededicates himself to its protection.\n"
                         + "\nThe forest flourishes, and the party leaves in celebration, having restored balance and regained an old friend.\n";
