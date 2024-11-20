@@ -448,8 +448,8 @@ public class GameLogic {
                 System.out.println(GREEN +"+"+addMP+" mana potions");
                 System.out.println();
                 if(inv.getGold() >= 10){
-                    boolean response = yesOrNo("Would you like to visit the shop?");
-                    if(response){
+                    //boolean response = yesOrNo("Would you like to visit the shop?");
+                    //if(response){
                         shopMenu(inv);
                     }
                 }
@@ -506,10 +506,13 @@ public class GameLogic {
         return false;
     }
     
-    public static void shopMenu(Inventory playerInventory) {
-    boolean shopping = true;
-    System.out.println();
-    System.out.println("( ; 7,_>7) Hoho, you found me! Welcome to the Secret Shop!");
+   public static void shopMenu(Inventory playerInventory) {
+    Random random = new Random();
+    if (random.nextInt(100) < 40) {
+        System.out.println("You see a shop in the distance...");
+        boolean shopping = true;
+        System.out.println();
+        System.out.println("( ; 7,_>7) Hoho, you found me! Welcome to the Secret Shop!");
         while (shopping) {
             System.out.println("\nWhat would you like to do?");
             System.out.println("1. Buy Health Potion (10 gold each)");
@@ -547,8 +550,10 @@ public class GameLogic {
                     break;
                 default:
                     System.out.println("Invalid choice! Please select again.");
-
             }
         }
+    } else {
+        System.out.println("You continue on your journey without finding a shop.");
     }
+}
 }
