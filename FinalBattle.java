@@ -16,7 +16,9 @@ public class FinalBattle extends GameLogic{
         CharacterKhaimon khaimon = new CharacterKhaimon();
         boolean enemyStunned = false;
         boolean partyStunned = false;
-        boolean isDefeated = false;
+        boolean isDefeated = false;        
+        boolean askOnce = false; //only ask to use artifact once
+        
         displayDialogue(StoryDialogue.finalBattleDialogue);
         displayDialogue(StoryDialogue.finalBattleIntro);
         while(anyPlayerAlive(party) && khaimon.isAlive()){
@@ -146,13 +148,14 @@ public class FinalBattle extends GameLogic{
             }
 
             //use artifact if present, to seal khaimon
-            if(gameEndings.getHasArtifact()&&khaimon.getHP()<=(khaimon.getMaxHP()/2)&&khaimon.isAlive()){
+            if(gameEndings.getHasArtifact()&&khaimon.getHP()<=(khaimon.getMaxHP()/2)&&khaimon.isAlive()&&!askOnce){
                 System.out.println("Corrupted Khaimon is at half health!");
                 boolean response = yesOrNo("Use artifact to seal Khaimon?");
                 if(response){
                     gameEndings.setUsedArtifact(true);
                     khaimon.setHP(0);
-                }                
+                }      
+                askOnce=true;
             }
             
             // Check if the slime is dead end sequence
