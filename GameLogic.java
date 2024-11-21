@@ -151,14 +151,14 @@ public class GameLogic {
         clearConsole();
         printSeparator(80);
         printSeparator(30);
-        System.out.println(" _____     _                              __   _     _       _     _   ");
-        System.out.println("|  ___|   | |                            / _| | |   (_)     | |   | |  ");
-        System.out.println("| |__  ___| |__   ___   ___  ___    ___ | |_  | |    _  __ _| |__ | |_ ");
-        System.out.println("|  __|/ __| '_ \\ / _ \\ / _ \\/ __|  / _ \\|  _| | |   | |/ _` | '_ \\| __|");
-        System.out.println("| |__| (__| | | | (_) |  __/\\__ \\ | (_) | |   | |___| | (_| | | | | |_ ");
-        System.out.println("\\____/\\___|_| |_|\\___/ \\___||___/  \\___/|_|   \\_____/_|\\__, |_| |_|\\__|");
-        System.out.println("                                                        __/ |          ");
-        System.out.println("                                                       |___/           ");
+        System.out.println(YELLOW + " _____     _                              __   _     _       _     _   " + RESET);
+        System.out.println(YELLOW+ "|  ___|   | |                            / _| | |   (_)     | |   | |  "+ RESET);
+        System.out.println(YELLOW+ "| |__  ___| |__   ___   ___  ___    ___ | |_  | |    _  __ _| |__ | |_ "+ RESET);
+        System.out.println(YELLOW+ "|  __|/ __| '_ \\ / _ \\ / _ \\/ __|  / _ \\|  _| | |   | |/ _` | '_ \\| __|"+RESET);
+        System.out.println(GREEN+"| |__| (__| | | | (_) |  __/\\__ \\ | (_) | |   | |___| | (_| | | | | |_ "+RESET);
+        System.out.println(GREEN+"\\____/\\___|_| |_|\\___/ \\___||___/  \\___/|_|   \\_____/_|\\__, |_| |_|\\__|"+RESET);
+        System.out.println(GREEN+"                                                        __/ |          "+RESET);
+        System.out.println(GREEN+"                                                       |___/           "+RESET);
         System.out.println("TEXT RPG BY GROUP KATEYKI");
         printSeparator(30);
         printSeparator(80);
@@ -265,7 +265,7 @@ public class GameLogic {
         printHeading("CHARACTER INFO");
         System.out.println("LVL " + inv.getLvl() + ": EXP " + inv.getXp() + "/" + inv.getReqXp() +"\t\t\tGold: " + inv.getGold());
         for (int i = 0; i < party.length; i++) {
-            System.out.println(RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")");
+            System.out.println(RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")"+RESET);
         }        
         
         boolean response = yesOrNo("Would you like to know more about the characters?");
@@ -314,7 +314,7 @@ public class GameLogic {
             // Player selects a character
             for (int i = 0; i < party.length; i++) {
                 if (party[i].isAlive()) {
-                    System.out.println(RESET + (i + 1) + ". " + RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")");
+                    System.out.println(RESET + (i + 1) + ". " + RESET + party[i].displayName() + RED + "(HP: " + party[i].getHP() + "/"+ RED +party[i].getMaxHP()+ BLUE +" | MP: "+party[i].getMP()+"/"+ BLUE +party[i].getMaxMP()+")"+ RESET);
                 }
             }
             
@@ -331,10 +331,10 @@ public class GameLogic {
             } while(choice == -1);
 
             // Player chooses an action
-            System.out.println("\n" + RESET + activePlayer.displayName() + "'s turn." + RESET + RED + " (HP: " + activePlayer.getHP() + "/"+ RED +activePlayer.getMaxHP()+ BLUE +" | MP: "+activePlayer.getMP()+"/"+ BLUE +activePlayer.getMaxMP()+")");
-            System.out.println("1. Use "+activePlayer.getSkillOne()+" (MP: "+activePlayer.skillOneMP()+ " | "+activePlayer.getDMG1()+")");
-            System.out.println("2. Use "+activePlayer.getSkillTwo()+" (MP: "+activePlayer.skillTwoMP()+ " | "+activePlayer.getDMG2()+")");
-            System.out.println("3. Use "+activePlayer.getSkillThree()+" (MP: "+activePlayer.skillThreeMP()+ " | "+activePlayer.getDMG3()+")");
+            System.out.println("\n" + RESET + activePlayer.displayName() + "'s" +RESET +" turn." + RESET + RED + " (HP: "+ activePlayer.getHP() + "/"+activePlayer.getMaxHP()+ BLUE +" | MP: "+activePlayer.getMP()+"/"+activePlayer.getMaxMP()+")"+RESET);
+            System.out.println("1. Use "+activePlayer.getSkillOne()+BLUE +" (MP: "+activePlayer.skillOneMP()+ " | "+RED+activePlayer.getDMG1()+")"+RESET);
+            System.out.println("2. Use "+activePlayer.getSkillTwo()+BLUE +" (MP: "+activePlayer.skillTwoMP()+ " | "+RED+activePlayer.getDMG2()+")"+RESET);
+            System.out.println("3. Use "+activePlayer.getSkillThree()+BLUE +" (MP: "+activePlayer.skillThreeMP()+ " | "+RED+activePlayer.getDMG3()+")"+RESET);
             System.out.println("4. Open inventory");
             int action = readInt(RESET + "\nChoose a skill: ", 4); 
             System.out.println();
@@ -415,7 +415,7 @@ public class GameLogic {
                     if (partyMember.getBuffTurnsRemaining() <= 0) {
                         partyMember.setBuffActive(false); // Deactivate buff
                         partyMember.setBuffPercentage(0); // Reset buff percentage
-                        System.out.println(partyMember.displayName() + "'s buff has expired.");
+                        System.out.println(partyMember.displayName() + RESET +"'s buff has expired.");
                     }
                 }
             }
@@ -446,7 +446,7 @@ public class GameLogic {
                 System.out.println(GREEN +"+100 gold");
                 System.out.println(GREEN +"+"+addHP+" health potions");
                 System.out.println(GREEN +"+"+addMP+" mana potions");
-                System.out.println();
+                System.out.println(RESET);
 //                if(inv.getGold() >= 10){
 //                    boolean response = yesOrNo("Would you like to visit the shop?");
 //                    if(response){
@@ -461,7 +461,7 @@ public class GameLogic {
             //printHeading(monster.displayName() + "'s turn!");
             // If the enemy is stunned, skip their turn
             if (enemyStunned) {
-                System.out.println(RED + monster.displayName() + " is stunned and skips their turn.\n");
+                System.out.println(RED + monster.displayName() + RED +" is stunned and skips their turn.\n");
                 enemyStunned = false; // Reset stun status after skipping turn
             } else {
                 // Enemy attacks a random player
@@ -469,7 +469,7 @@ public class GameLogic {
                 do {
                     target = party[(int) (Math.random() * party.length)];  // Select a random party member
                 } while (!target.isAlive());  // Repeat if the selected character is not alive
-                System.out.println("\n" + monster.displayName() + "'s turn and targeted "+target.displayName()+"!");
+                System.out.println("\n" + monster.displayName() + "'s" + RESET +" turn and targeted "+target.displayName()+"!");
                 damage = 0;
                 boolean partyStunned = false;
                 if(monster instanceof MonsterShadowMaw){
@@ -516,7 +516,7 @@ public class GameLogic {
             System.out.println("1. Buy Health Potion (10 gold each)");
             System.out.println("2. Buy Mana Potion (10 gold each)");
             System.out.println("3. Exit Shop");
-            int choice = readInt("\nEnter your choice (1-3): ", 3);
+            int choice = readInt("\nEnter your choice (1-3): "+RESET, 3 );
             switch (choice) {
                 case 1:
                     System.out.print("How many Health Potions would you like to buy? ");
@@ -525,7 +525,7 @@ public class GameLogic {
                     if (playerInventory.getGold() >= healthPotionCost) {
                         playerInventory.addHealthPotion(healthPotionQuantity);
                         playerInventory.spendGold(healthPotionCost);
-                        System.out.println("You bought " + healthPotionQuantity + " Health Potions!");
+                        System.out.println("You bought " +RED+ healthPotionQuantity + RED+ " Health Potions!"+RESET);
                     } else {
                         System.out.println("Not enough gold!");
                     }
@@ -537,7 +537,7 @@ public class GameLogic {
                     if (playerInventory.getGold() >= manaPotionCost) {
                         playerInventory.addManaPotion(manaPotionQuantity);
                         playerInventory.spendGold(manaPotionCost);
-                        System.out.println("You bought " + manaPotionQuantity + " Mana Potions!");
+                        System.out.println("You bought " +BLUE+ manaPotionQuantity +BLUE+ " Mana Potions!"+RESET);
                     } else {
                         System.out.println("Not enough gold!");
                     }
