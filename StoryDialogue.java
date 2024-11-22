@@ -40,12 +40,20 @@ public class StoryDialogue {
                     "Elara: Stick close. This may be small, but it's stronger than it looks."
         };
     public static String[] act1Outro = {
-        "As the corrupted slime dissolves into a puddle of darkness, a sense of relief washes over Elara and Jascha. The faint glow around Jascha intensifies, illuminating the area and driving away the encroaching shadows. "
-            + "\nElara turns to him, a spark of hope in her eyes. \"You fought bravely, Jascha. Together, we can face whatever darkness lies ahead.\"\n" +
-            "\n" +"Jascha nods, still grappling with the weight of the prophecy but finding strength in their shared purpose. \"If I'm the hero you believe I am, then let's find out what we're truly capable of.\"\n" +
-            "\n" +"With renewed determination, they press deeper into the forest, where the air grows heavier with the scent of corruption. \"We must reach the heart of the World Tree,\" Elara urges, her voice steady. \"Every moment counts.\"\n" +
-            "\n" +"As they venture forth, the faint whispers of the fairies echo in the wind, a reminder that the balance of their world hangs in the balance. \"\n" +
-            "\n" +"Elara knows that together, they will uncover the truths of the prophecy and confront the dark forces threatening their home. With each step, they draw closer to their destiny, ready to embrace the challenges that await them."
+        "As the corrupted slime dissolves into a puddle of darkness, a sense of relief washes over Elara and Jascha. "
+            + "\nThe faint glow around Jascha intensifies, illuminating the area and driving away the encroaching shadows. "
+            + "\nElara turns to him, a spark of hope in her eyes. \"You fought bravely, Jascha. "
+            + "\nTogether, we can face whatever darkness lies ahead.\"\n" +
+            "\n" +"Jascha nods, still grappling with the weight of the prophecy but finding strength in their shared purpose."
+            + "\n\"If I'm the hero you believe I am, then let's find out what we're truly capable of.\n" +
+            "\n" +"\"With renewed determination, they press deeper into the forest, where the air grows heavier with "
+            + "\nthe scent of corruption. \"We must reach the heart of the World Tree, "
+            + "\n\"Elara urges, her voice steady. \"Every moment counts.\"\n" +
+            "\n" +"As they venture forth, the faint whispers of the fairies echo in the wind, a reminder that the balance "
+            + "\nof their world hangs in the balance. \n" +
+            "\n" +"Elara knows that together, they will uncover the truths of the prophecy and confront the dark forces "
+            + "\nthreatening their home. With each step, they draw closer to their destiny, ready to embrace the challenges "
+            + "\nthat await them."
     };
     public static String [] act2Intro = {
             "Level 2: Wonderland\n" +
@@ -76,10 +84,13 @@ public class StoryDialogue {
             "Finn: Got it. Hey, ogres! Over here!"
         };
     public static String[] act2Outro = {
-        "After a chaotic battle against the Three-Headed Ogre, Elara and her party stand amidst the remnants of the fight, breathing heavily but triumphant.\" "
-            + "\nFinn grins, his mischievous nature shining through as he says, \"Now that was a show! But it seems the real challenge is yet to come.\" "
-            + "\nAs the party regroups, they notice dark vines creeping into Dark Forest, a troubling reminder of the corruption's reach. \"We must press on,\" Elara declares.\" "
-            + "\nThe true hero is out there, and we need to find him before it's too late.\" "
+        "After a chaotic battle against the Three-Headed Ogre, Elara and her party stand amidst the remnants of the fight, "
+            + "\nbreathing heavily but triumphant.\" "
+            + "\nFinn grins, his mischievous nature shining through as he says, \"Now that was a show! "
+            + "\nBut it seems the real challenge is yet to come.\" "
+            + "\nAs the party regroups, they notice dark vines creeping into Dark Forest, "
+            + "\na troubling reminder of the corruption's reach. \"We must press on,\" Elara declares. "
+            + "\n\"The true hero is out there, and we need to find him before it's too late.\" "
             + "\nWith newfound determination, the team sets off to uncover the mysteries of Dark Forest and the path that lies ahead."
     };
     
