@@ -306,7 +306,8 @@ public class GameLogic {
     public static void battle(Monster monster, Character[] party){
         
         monster.show();
-        System.out.println(monster.displayName()+" is ready to strike!\n"); 
+        System.out.println(monster.displayName()+" is ready to strike!"); 
+        System.out.println("\n" + RED + monster.displayName() + RED + " HP: " + monster.getHP()+"\n");
         boolean enemyStunned = false;
         
         while (anyPlayerAlive(party) && monster.isAlive()) {
@@ -479,12 +480,18 @@ public class GameLogic {
                         case 1:
                             damage = monster.skillOne();
                             partyStunned = true;
+                            target.setHP(target.getHP() - damage);
                             System.out.println("The party is stunned and skip their next turn.");
-                        
+                            break;
                         case 2:
                             damage = monster.skillTwo();
+                            target.setHP(target.getHP() - damage);
                             break;
                     }
+                } else {
+                    damage = monster.skillOne();                    
+                    System.out.println();
+                    target.setHP(target.getHP() - damage);
                 }
             }
             
