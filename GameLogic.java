@@ -483,7 +483,7 @@ public class GameLogic {
                             partyStunned = true;
                             target.setHP(target.getHP() - damage);
                             System.out.println("The party is stunned and skip their next turn.");
-                            break;
+                            
                         case 2:
                             damage = monster.skillTwo();
                             target.setHP(target.getHP() - damage);
