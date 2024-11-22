@@ -21,6 +21,9 @@ public class FinalBattle extends GameLogic{
         
         displayDialogue(StoryDialogue.finalBattleDialogue);
         displayDialogue(StoryDialogue.finalBattleIntro);
+        System.out.println(khaimon.displayName()+" is ready to strike!"); 
+        System.out.println("\n" + RED + khaimon.displayName() + RED + " HP: " + khaimon.getHP()+"\n");
+        
         while(anyPlayerAlive(party) && khaimon.isAlive()){
             if (partyStunned) {
                 System.out.println("Party is stunned, your turn is skipped.\n");
