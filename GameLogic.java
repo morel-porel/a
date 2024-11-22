@@ -165,9 +165,10 @@ public class GameLogic {
         
         
         displayDialogue(StoryDialogue.act1Intro);
+        isRunning = true;
         battle(new MonsterSlime(25), party);
         //set to true for game loop
-        isRunning = true;
+        
         //start main game
         gameLoop();
     }
@@ -499,7 +500,8 @@ public class GameLogic {
             
             // Check if all players are dead
             if (!anyPlayerAlive(party)) {
-                partyDied();                
+                partyDied();    
+                isRunning = false;
                 break;
             }
         }    
@@ -559,5 +561,15 @@ public class GameLogic {
 
             }
         }
+    }
+    
+    public static void credits(){
+        printHeading("Credits");
+        System.out.println("Members:");
+        System.out.println("Jascha B. Base");
+        System.out.println("Elissa Mae B. Casas");
+        System.out.println("Michelu Tia A. Lim");
+        System.out.println("Muriel D. Pacio");
+        System.out.println("Kate Marielle C. Potane");
     }
 }
