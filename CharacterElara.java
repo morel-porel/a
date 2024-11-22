@@ -255,7 +255,7 @@ public class CharacterElara extends Character{
     }
     @Override 
     public String getDMG1(){
-        return "DMG: 1";
+        return "DMG: 0-10";
     }
     // range 2
     @Override
