@@ -17,6 +17,7 @@ public class JavaGame {
         // Define characters
 
         GameLogic.startGame();
+        GameLogic.credits();
 //        CharacterJascha Jascha = new CharacterJascha(150, 1000);
 //        CharacterElara Elara = new CharacterElara(150, 1000);
 //        CharacterFinn Finn = new CharacterFinn(150, 1000);
