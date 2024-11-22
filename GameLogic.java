@@ -190,6 +190,7 @@ public class GameLogic {
             
             for(Character partyMember : party){
                 partyMember.setHP(partyMember.getMaxHP());
+                partyMember.setMP(partyMember.getMaxMP());
             }
         } else if (inv.getLvl() >= 14 && act ==2){
             act = 3;
